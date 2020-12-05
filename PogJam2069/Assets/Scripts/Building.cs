@@ -104,7 +104,15 @@ public class Building : MonoBehaviour
         Debug.Log("hey");
         if(collision.tag == "Player" &&  Input.GetKey(KeyCode.F))
         {
-            Build();
+            if(BuildingManager.buildManager.TryPayForBuildings(buildingType))
+            {
+                BuildingManager.buildManager.PayForBuilding(buildingType);
+                Build();
+            }
+            else
+            {
+                // say there was problem building building or something or no money but not really possible.
+            }
         }
     }
 }
