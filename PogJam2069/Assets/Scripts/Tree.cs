@@ -28,8 +28,9 @@ public class Tree : MonoBehaviour
     {
         if(currenthits >= treehitsToDestroy)
         {
-            
+
             //give wood
+            WoodManager.Wmanager.addWood(woodToGive);
             treeisDead = true;
             currenthits = 0;
 
