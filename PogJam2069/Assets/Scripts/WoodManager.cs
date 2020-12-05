@@ -9,6 +9,7 @@ public class WoodManager : MonoBehaviour
 
     // Resources //
     public int Wood;
+    public List<GameObject> buildings;
 
     // Events //
     private bool didWoodSurprise1 = true;
@@ -30,13 +31,13 @@ public class WoodManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void addWood(int woodToAdd)
     {
         Wood += woodToAdd;
-        BuildingManager.buildManager.UpdateWoodAvailibility(Wood);
+        CheckBuilding();
 
         // Wood Surprise 1
         if (Wood >= 1 && !didWoodSurprise1)
@@ -55,18 +56,18 @@ public class WoodManager : MonoBehaviour
 
                 "Open the lootbox!",
                 "Gain what's inside?",
-                new UnityAction(delegate() {print("YOU GOT PRANKD");}),
+                new UnityAction(delegate () { print("YOU GOT PRANKD"); }),
 
                 "Sell the lootbox for wood",
                 "+1 Wood",
-                new UnityAction(delegate() {addWood(1);})
+                new UnityAction(delegate () { addWood(1); })
             ));
         }
     }
 
     public void SubtractWood(int woodToSubtrack)
     {
-        if(woodToSubtrack <= Wood)
+        if (woodToSubtrack <= Wood)
         {
             Wood -= woodToSubtrack;
         }
@@ -74,7 +75,7 @@ public class WoodManager : MonoBehaviour
         {
             Wood = 0;
         }
-        BuildingManager.buildManager.UpdateWoodAvailibility(Wood);
+        CheckBuilding();
     }
 
     public void PurchaseWithWood(int woodToSubtrack)
@@ -83,10 +84,18 @@ public class WoodManager : MonoBehaviour
         {
             Wood -= woodToSubtrack;
         }
-        BuildingManager.buildManager.UpdateWoodAvailibility(Wood);
+        CheckBuilding();
     }
-    
-    
+
+    private void CheckBuilding()
+    {
+        foreach (GameObject build in buildings)
+        {
+            build.GetComponent<IBuilding>().CheckCanBuild(Wood);
+        }
+    }
+
+
     //////////////////////////////
     // Event Function Delegates //
     //////////////////////////////
