@@ -5,9 +5,8 @@ using UnityEngine;
 public class WoodManager : MonoBehaviour
 {
     public static WoodManager Wmanager;
-
-
     public int Wood;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -19,7 +18,6 @@ public class WoodManager : MonoBehaviour
         {
             Wmanager = this;
         }
-
     }
 
     // Update is called once per frame
@@ -31,6 +29,7 @@ public class WoodManager : MonoBehaviour
     public void addWood(int woodToAdd)
     {
         Wood += woodToAdd;
+        BuildingManager.buildManager.UpdateWoodAvailibility(Wood);
     }
 
     public void SubtractWood(int woodToSubtrack)
@@ -39,6 +38,22 @@ public class WoodManager : MonoBehaviour
         {
             Wood -= woodToSubtrack;
         }
+        else
+        {
+            Wood = 0;
+        }
+        BuildingManager.buildManager.UpdateWoodAvailibility(Wood);
     }
+
+    public void PurchaseWithWood(int woodToSubtrack)
+    {
+        if (woodToSubtrack <= Wood)
+        {
+            Wood -= woodToSubtrack;
+        }
+        BuildingManager.buildManager.UpdateWoodAvailibility(Wood);
+    }
+
+
 
 }
