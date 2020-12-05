@@ -10,7 +10,7 @@ public class Tree : MonoBehaviour
     public int woodToGive;
     public float treeRespawnTimer;
     private float timer;
-    bool treeisDead;
+    public bool treeisDead;
     public Sprite TreeAlive;
     public Sprite TreeDead;
     SpriteRenderer sr;

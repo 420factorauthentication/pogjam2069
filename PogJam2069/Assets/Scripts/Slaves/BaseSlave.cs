@@ -5,25 +5,27 @@ using UnityEngine;
 
 public enum SlaveTask
 {
-    Inactive,
     CutTree,
     CommitTaxFraud
 }
 
 public class BaseSlave : MonoBehaviour
 {
+    public LayerMask AxeHitLayer;
     public bool canDoTask = false;
     public bool isMoving = true;
     public bool isMovingToDepot = false;
     public float taskRate = 1f;
     public int woodGainPerTask = 20;
-    public SlaveTask currTask = SlaveTask.Inactive;
+    public SlaveTask currTask = SlaveTask.CutTree;
     public float speed = 1f;
     public float allowedDiff = 0.1f;
     public float randRadiusAroundPoint = 1f;
+    public float randRadiusAroundDepot = 0.3f;
+    public float treeIsThereRange = 1.5f;
     public Transform currMoveTarget
     {
-        get { return _currMoveTarget;  }
+        get { return _currMoveTarget; }
         set
         {
             _currMoveTarget = value;
@@ -36,6 +38,7 @@ public class BaseSlave : MonoBehaviour
 
     private Vector3 targetOffset = new Vector2();
     private Vector3 depotOffset = new Vector2();
+    private RotateToTree rotater;
     [SerializeField]
     private Transform _currMoveTarget;
     private float timeSinceLastTask = 0f;
@@ -51,24 +54,39 @@ public class BaseSlave : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         targetOffset = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * randRadiusAroundPoint;
-        depotOffset = new Vector2(Random.Range(-1f,1f), Random.Range(-1f, 1f)).normalized * randRadiusAroundPoint;
+        depotOffset = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * randRadiusAroundDepot;
+        rotater = GetComponentInChildren<RotateToTree>();
+        rotater.tree = _currMoveTarget;
     }
 
     void Update()
     {
         if (canDoTask && !isMoving && timeSinceLastTask > taskRate)
         {
+            Collider2D[] hitobjects = Physics2D.OverlapCircleAll(transform.position, treeIsThereRange, AxeHitLayer);
+            bool treeIsThere = false;
+            foreach (Collider2D thingsHit in hitobjects)
+            {
+                if (thingsHit.GetComponent<Tree>() != null && !thingsHit.GetComponent<Tree>().treeisDead)
+                {
+                    treeIsThere = true;
+                }
+            }
+
             switch (currTask)
             {
                 case SlaveTask.CutTree:
-                    Debug.Log("cuttinng tree");
-                    anim.SetTrigger("Attack");
-                    counter++;
-                    if(counter > 1)
+                    if (treeIsThere)
                     {
-                        isMovingToDepot = true;
-                        isMoving = true;
-                        counter = 0;
+                        anim.SetTrigger("Attack");
+                        counter++;
+                        if (counter > 1)
+                        {
+                            isMovingToDepot = true;
+                            isMoving = true;
+                            rotater.pointToTree = false;
+                            counter = 0;
+                        }
                     }
                     break;
                 case SlaveTask.CommitTaxFraud:
@@ -83,13 +101,13 @@ public class BaseSlave : MonoBehaviour
         {
             isMoving = false;
         }
-        else if(isMovingToDepot && Mathf.Abs(Vector2.Distance(currDepotTarget.position + depotOffset, transform.position)) < allowedDiff)
+        else if (isMovingToDepot && Mathf.Abs(Vector2.Distance(currDepotTarget.position + depotOffset, transform.position)) < allowedDiff)
         {
             isMovingToDepot = false;
             Deposit();
             // change destination
             targetOffset = new Vector2(Random.value, Random.value).normalized * randRadiusAroundPoint;
-            depotOffset = new Vector2(Random.value, Random.value).normalized * randRadiusAroundPoint;
+            depotOffset = new Vector2(Random.value, Random.value).normalized * randRadiusAroundDepot;
         }
         else
         {
@@ -110,8 +128,8 @@ public class BaseSlave : MonoBehaviour
         switch (currTask)
         {
             case SlaveTask.CutTree:
-                Debug.Log("deposited");
                 WoodManager.Wmanager.addWood(woodGainPerTask);
+                rotater.pointToTree = true;
                 break;
             case SlaveTask.CommitTaxFraud:
                 break;
@@ -195,5 +213,4 @@ public class BaseSlave : MonoBehaviour
             p.Release(this);
         }
     }
-
 }

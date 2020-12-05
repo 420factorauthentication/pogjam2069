@@ -449,15 +449,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e31ebb4e0293ca498ad80629c37e82c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AxeHitLayer:
+    serializedVersion: 2
+    m_Bits: 256
   canDoTask: 1
   isMoving: 1
   isMovingToDepot: 0
   taskRate: 1
   woodGainPerTask: 20
   currTask: 1
-  speed: 1
+  speed: 2
   allowedDiff: 0.1
-  randRadiusAroundPoint: 0.5
+  randRadiusAroundPoint: 1.3
+  randRadiusAroundDepot: 0.3
+  treeIsThereRange: 1.5
   currDepotTarget: {fileID: 634322149}
   anim: {fileID: 1464283396}
   _currMoveTarget: {fileID: 1293990652}
@@ -559,15 +564,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e31ebb4e0293ca498ad80629c37e82c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AxeHitLayer:
+    serializedVersion: 2
+    m_Bits: 256
   canDoTask: 1
   isMoving: 1
   isMovingToDepot: 0
   taskRate: 1
   woodGainPerTask: 20
   currTask: 1
-  speed: 1
+  speed: 2
   allowedDiff: 0.1
-  randRadiusAroundPoint: 0.5
+  randRadiusAroundPoint: 1.3
+  randRadiusAroundDepot: 0.3
+  treeIsThereRange: 1.5
   currDepotTarget: {fileID: 634322149}
   anim: {fileID: 1193445219}
   _currMoveTarget: {fileID: 1293990652}
@@ -784,11 +794,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150290219}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 454b4ee7d8bc5754b8195fc3e902abd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 48c11a5eeafa79f4ebb4f0bf2576a086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1.5
+  tree: {fileID: 0}
+  pointToTree: 1
 --- !u!1 &1193445217
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,7 +812,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1193445218}
   - component: {fileID: 1193445221}
-  - component: {fileID: 1193445220}
   - component: {fileID: 1193445219}
   m_Layer: 0
   m_Name: Axe
@@ -841,24 +853,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1193445220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193445217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44192f65e6a211c4ba367fffbf23f1f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPoint: {fileID: 1193445218}
-  AxeHitLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  range: 0.5
-  attackSpeed: 0.5
 --- !u!212 &1193445221
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -949,11 +943,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197862600}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 454b4ee7d8bc5754b8195fc3e902abd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 48c11a5eeafa79f4ebb4f0bf2576a086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1.5
+  tree: {fileID: 0}
+  pointToTree: 1
 --- !u!1 &1293990650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,6 +1078,7 @@ MonoBehaviour:
   treehitsToDestroy: 3
   woodToGive: 1
   treeRespawnTimer: 2
+  treeisDead: 0
   TreeAlive: {fileID: 21300000, guid: 581575ba0a03ef94ab757b0b090866c6, type: 3}
   TreeDead: {fileID: 21300000, guid: f6fc14e9e5dc20b43a55425c054114a9, type: 3}
 --- !u!61 &1293990655
@@ -1268,7 +1266,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1464283395}
   - component: {fileID: 1464283398}
-  - component: {fileID: 1464283397}
   - component: {fileID: 1464283396}
   m_Layer: 0
   m_Name: Axe
@@ -1310,24 +1307,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1464283397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464283394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44192f65e6a211c4ba367fffbf23f1f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPoint: {fileID: 1464283395}
-  AxeHitLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  range: 0.5
-  attackSpeed: 0.5
 --- !u!212 &1464283398
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1613,7 +1592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACYn+u3HXGLaQIAABIFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzg1jgx2gt5YQ0gMJE9rJxRdFWmMNsuTRR/jI8N8ryTZ23OkJse/t6u3blT8RE7oCYqRaK0Y3kgL6PkJPcMJ7KTBH30Ydo4nu2AVa4hujpvAkHDiv2DDp4rFP07IEoxj5Ifbck9NkPJum9x6zguVSlSu6h6XURjvUKAsOUdL4GsJFPkfo5H7uFpGLn91pMvOnizstotHVHQkIA6qjtsSWVrOsIByXFVAvvCNPFuM4mS+mbfF4nEyn0fR+HpKEa7DhR+N5OptO4iTx0onknOlGITLnKviwqwpQ4I2gDLu2gypPL4DtC+Pr93Nf8lyDaZQqfH5gyrlXF0U/ZW1pifWhlvuBuQ0OxpMgri66+Qe/iwOcK1k+tffGkb/DFIwcXvGZYO2DOeYaBuGHr8KtOGJ+wO8c3goQz3KtpBW0G5TVMHno/t5aWxZADl28ljoI2ur/M/M9XEP3pyVn5XsYQFIHdlwGu8NGgHIj+uUEh33RTQkX9Sr+aPiN97rXagM8MqWNg5ouhZf3Lq3SYYrs5I0n1iylEqB6e1mBew3mvHVFzHCAA6x36QB5xP4ZNVc3WPs6Bikh3PGjaABt5fE2Kl3I4wZ08WINZwI60R54di4tpRD1fvUdadN2VuWY9NL2ltGvi4WieRonKURxNEtiOs/v6IymeJ5EE0oxiaMUhc1jwvWJ+bYW2tjjZia64sJtma/oPzejtcJV2HWq8HHNLqXsWc5ELndEAYiXusJNOCh3iXucdEWZM2gHxjARpo0+M8QlOQDNboWy0OnqZBTOuioZqtiHND6SoWX4kGToiq5/AVBLAwQUAAAICAAAmJ/rSbd0H20AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0koGFqaGJaaqBoYG5iWGKRZpuinmKaaKFiYFRSkpisqGBqVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAmJ/rtx1xi2kCAAASBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAmJ/rSbd0H20AAAB4AAAACQAkAAAAAAAAAAAAAAC2AgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAG4DAAAAAA==
+    dataString: UEsDBBQAAAgIAACYn+uDIsYVZwIAABIFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMty2jAU/RVG64axwQ7QXUsI6YKECe1k440iXWMNsuTRIzwy/Hsl2caOO10hzj0699yH/ImY0BUQI9VaMbqRFND3EXqCE95LgTn6NuoYDbpjF2iJb4yawpNw4Lxiw6TDY39NyxKMYuSH2HNPTpPxbJre+5gVLJeqXNE9LKU22kWNsuAiShqvIRzyOUIn93O3iBx+dqfJzJ8u7rSIRld3JCAMqI7aEltazbKCcFxWQL3xjjxZjONkvpi24vE4mU6j6f08XBKuwIYfjefpbDqJk8RbJ5JzphuHyJyr0IddVYAC3wjKsCs7uPL0Ati+MF6/f/clzzWYxqnC5wemXPdqUfRT1i0tsT7Udj8wtz7NrDFXi27+id/FIZwrWT61eePI5zAFI4dXfCZYezDHXMMAfvhq3Ioj5gf8zuGtAPEs10paQbtBWQ2Th+7vrbRlAeTQ4bXVAWir/8/M13AN1Z+WnJXvYQBJDey4DO0OGwHKjeiXMxz2RTcSDvUu/mj4jfe6V2oTeGRKGxdqqhTe3ru0SocpspNvPLFmKZUA1dvLCtxrMOetEzHDAQ5ivaSDyCP2z6hJ3cTa1zG4EuCOH0WD0FYeb6PShTxuQBcv1nAmoDPtA8+uS0spRL1f/Y6013ZW5Zj0ru0to18XC0XzNE5SiOJolsR0nt/RGU3xPIkmlGISRykKm8eEqxPzbW20aY+bmejEhdsyr+g/N6O1wlXYdarwcc0upey1nIlc7ogCEC+1ws04KJfEPU66osw1aAfGMBGmjT4zxCU5AM1uQlmodHUyCmedSoYq9iGNRzK0DB+SDF3R9S9QSwMEFAAACAgAAJif60m3dB9tAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTVUVBKL0osyCgGihiCOKWZKSB2tJKBhamhiWmqgaGBuYlhikWabop5immihYmBUUpKYrKhgalSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAJif64MixhVnAgAAEgUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJif60m3dB9tAAAAeAAAAAkAJAAAAAAAAAAAAAAAtAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABsAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
