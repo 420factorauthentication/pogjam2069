@@ -11,7 +11,7 @@ public class WoodManager : MonoBehaviour
     public int Wood;
 
     // Events //
-    private bool didWoodSurprise1 = false;
+    private bool didWoodSurprise1 = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -84,11 +84,9 @@ public class WoodManager : MonoBehaviour
         }
         BuildingManager.buildManager.UpdateWoodAvailibility(Wood);
     }
-
-
+    
+    
     //////////////////////////////
     // Event Function Delegates //
     //////////////////////////////
-
-
 }

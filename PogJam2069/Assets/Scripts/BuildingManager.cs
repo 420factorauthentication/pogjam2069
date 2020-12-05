@@ -130,4 +130,54 @@ public class BuildingManager : MonoBehaviour
             build.CanNotBuild();
         }
     }
+
+    public bool TryPayForBuildings(BuildingType type)
+    {
+        switch (type)
+        {
+            case BuildingType.House:
+                return canPurchaseHouse;
+            case BuildingType.NpcHouse:
+                return canPurchaseNpcHouse;
+            case BuildingType.Storage:
+                return canPurchaseStorage;
+            case BuildingType.Blackum:
+                return canPurchaseBlackum;
+            case BuildingType.Armory:
+                return canPurchaseArmory;
+            case BuildingType.Mine:
+                return canPurchaseMine;
+            case BuildingType.Bank:
+                return canPurchaseBank;
+        }
+        return false;
+    }
+
+    public void PayForBuilding(BuildingType type)
+    {
+        switch (type)
+        {
+            case BuildingType.House:
+                WoodManager.Wmanager.PurchaseWithWood(houseCost);
+                break;
+            case BuildingType.NpcHouse:
+                WoodManager.Wmanager.PurchaseWithWood(npcHouseCost);
+                break;
+            case BuildingType.Storage:
+                WoodManager.Wmanager.PurchaseWithWood(storageCost);
+                break;
+            case BuildingType.Blackum:
+                WoodManager.Wmanager.PurchaseWithWood(blackumCost);
+                break;
+            case BuildingType.Armory:
+                WoodManager.Wmanager.PurchaseWithWood(armoryCost);
+                break;
+            case BuildingType.Mine:
+                WoodManager.Wmanager.PurchaseWithWood(mineCost);
+                break;
+            case BuildingType.Bank:
+                WoodManager.Wmanager.PurchaseWithWood(bankCost);
+                break;
+        }
+    }
 }

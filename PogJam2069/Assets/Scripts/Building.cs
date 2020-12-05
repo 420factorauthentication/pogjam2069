@@ -101,10 +101,18 @@ public class Building : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("hey");
-        if(collision.tag == "Player" &&  Input.GetKey(KeyCode.F))
+        if(!isBuilt && collision.tag == "Player" &&  Input.GetKey(KeyCode.F))
         {
-            Build();
+            if(BuildingManager.buildManager.TryPayForBuildings(buildingType))
+            {
+                BuildingManager.buildManager.PayForBuilding(buildingType);
+                Build();
+                Debug.Log("hey");
+            }
+            else
+            {
+                // say there was problem building building or something or no money but not really possible.
+            }
         }
     }
 }
