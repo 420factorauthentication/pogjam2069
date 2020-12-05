@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SurpriseManager : MonoBehaviour {
+    public static SurpriseManager Smanager;
+
     public GameObject surpriseFramePrefab;   // Prefab used for dialog prompts.
     public List<Sprite> images;              // List of possible images for dialog prompt descriptions.
     private List<GameObject> surpriseFrames; // Current list of all active Surprise Event dialog prompts.
@@ -14,6 +16,15 @@ public class SurpriseManager : MonoBehaviour {
     /////////////////
     public SurpriseManager() {
         this.surpriseFrames = new List<GameObject>();
+    }
+
+    void Awake() {
+        if (Smanager != null && Smanager != this){
+            Destroy(this.gameObject);
+        }
+        else {
+            Smanager = this;
+        }
     }
 
     void Start() {
