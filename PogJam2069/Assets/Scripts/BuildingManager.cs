@@ -24,6 +24,12 @@ public class BuildingManager : MonoBehaviour
     private bool canPurchaseMine;
     private bool canPurchaseBank;
 
+    public bool WoodStorageBought;
+    public bool HouseBought;
+    public bool BlackSmithBought;
+
+
+
     private void Awake()
     {
         if (buildManager != null && buildManager != this)
