@@ -37,12 +37,12 @@ public class Casino : MonoBehaviour, IBuilding
         if (!IsBuilt && currWood >= Cost)
         {
             canBeBuiltOutline.SetActive(true);
-            builtSprite.SetActive(false);
+            builtObject.SetActive(false);
         }
         else if (!IsBuilt && currWood < Cost && !canBeBuiltOutline.activeSelf)
         {
             canBeBuiltOutline.SetActive(false);
-            builtSprite.SetActive(false);
+            builtObject.SetActive(false);
         }
     }
 
@@ -52,7 +52,7 @@ public class Casino : MonoBehaviour, IBuilding
         {
             WoodManager.Wmanager.PurchaseWithWood(Cost);
             canBeBuiltOutline.SetActive(false);
-            builtSprite.SetActive(true);
+            builtObject.SetActive(true);
             IsBuilt = true;
         }
     }
