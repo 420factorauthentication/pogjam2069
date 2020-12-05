@@ -20,20 +20,23 @@ public class BaseSlave : MonoBehaviour
     public SlaveTask currTask = SlaveTask.Inactive;
     public float speed = 1f;
     public float allowedDiff = 0.1f;
-    public Vector3 currMoveTarget
+    public Vector3 targetOffset = new Vector2();
+    public Vector3 depotOffset = new Vector2();
+    public Transform currMoveTarget
     {
         get { return _currMoveTarget;  }
         set
         {
             _currMoveTarget = value;
-            GetComponent<AIPath>().destination = _currMoveTarget;
+            GetComponent<AIPath>().destination = _currMoveTarget.position;
             GetComponent<AIPath>().SearchPath();
         }
     }
-    private Vector3 currDepotTarget = new Vector2(-4.45f,-1.66f);
+    public Transform currDepotTarget;
+    public Animator anim;
 
     [SerializeField]
-    private Vector3 _currMoveTarget = new Vector2(1,0);
+    private Transform _currMoveTarget;
     private float timeSinceLastTask = 0f;
     private Path currentPath;
     private Seeker seeker;
@@ -46,7 +49,6 @@ public class BaseSlave : MonoBehaviour
     void Start()
     {
         seeker = GetComponent<Seeker>();
-        currMoveTarget = new Vector2(6.47f, 1.2f);
     }
 
     void Update()
@@ -57,9 +59,9 @@ public class BaseSlave : MonoBehaviour
             {
                 case SlaveTask.CutTree:
                     Debug.Log("cuttinng tree");
-                    // return to depot
+                    anim.SetTrigger("Attack");
                     counter++;
-                    if(counter > 3)
+                    if(counter > 2)
                     {
                         isMovingToDepot = true;
                         isMoving = true;
@@ -79,11 +81,11 @@ public class BaseSlave : MonoBehaviour
             // move to target
             Move(deltaTime);
         }
-        if (!isMovingToDepot && Mathf.Abs(Vector3.Distance(currMoveTarget, transform.position)) < allowedDiff)
+        if (!isMovingToDepot && Mathf.Abs(Vector2.Distance(currMoveTarget.position, transform.position)) < allowedDiff)
         {
             isMoving = false;
         }
-        else if(isMovingToDepot && Mathf.Abs(Vector3.Distance(currDepotTarget, transform.position)) < allowedDiff)
+        else if(isMovingToDepot && Mathf.Abs(Vector2.Distance(currDepotTarget.position, transform.position)) < allowedDiff)
         {
             isMovingToDepot = false;
             Deposit();
@@ -103,6 +105,7 @@ public class BaseSlave : MonoBehaviour
         {
             case SlaveTask.CutTree:
                 Debug.Log("deposited");
+                WoodManager.Wmanager.addWood(woodGainPerTask);
                 break;
             case SlaveTask.CommitTaxFraud:
                 break;
@@ -111,7 +114,7 @@ public class BaseSlave : MonoBehaviour
 
     private void Move(float deltaTime)
     {
-        Vector3 target = isMovingToDepot ? currDepotTarget : _currMoveTarget;
+        Vector3 target = isMovingToDepot ? currDepotTarget.position : _currMoveTarget.position;
 
         if (timeSinceLastTask > taskRate && seeker.IsDone())
         {
