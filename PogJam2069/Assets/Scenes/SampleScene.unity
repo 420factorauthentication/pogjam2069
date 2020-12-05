@@ -457,8 +457,7 @@ MonoBehaviour:
   currTask: 1
   speed: 1
   allowedDiff: 0.1
-  targetOffset: {x: 0, y: 0, z: 0}
-  depotOffset: {x: 0, y: 0, z: 0}
+  randRadiusAroundPoint: 0.5
   currDepotTarget: {fileID: 634322149}
   anim: {fileID: 1464283396}
   _currMoveTarget: {fileID: 1293990652}
@@ -650,8 +649,7 @@ MonoBehaviour:
   currTask: 1
   speed: 1
   allowedDiff: 0.1
-  targetOffset: {x: 0, y: 0, z: 0}
-  depotOffset: {x: 0, y: 0, z: 0}
+  randRadiusAroundPoint: 0.5
   currDepotTarget: {fileID: 634322149}
   anim: {fileID: 1193445219}
   _currMoveTarget: {fileID: 1293990652}
