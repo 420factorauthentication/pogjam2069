@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCTalk : MonoBehaviour
+public class SpriteSorting : MonoBehaviour
 {
-    public List<string> introLines = new List<string>();
-
     // Start is called before the first frame update
     void Start()
     {
