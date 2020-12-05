@@ -236,6 +236,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surpriseFramePrefab: {fileID: 2772567080118404336, guid: a81e4c4a373300349b32f6940935e945, type: 3}
+  images:
+  - {fileID: 21300000, guid: eb52d4e855e9dc94b8e693838d4d1094, type: 3}
 --- !u!4 &902622007
 Transform:
   m_ObjectHideFlags: 0

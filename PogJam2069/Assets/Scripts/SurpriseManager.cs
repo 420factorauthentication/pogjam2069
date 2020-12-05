@@ -4,89 +4,118 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SurpriseManager : MonoBehaviour {
-    public GameObject surpriseFramePrefab;
-    public List<Sprite> images;
+    public static SurpriseManager Smanager;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        GameObject newFrame = Instantiate(surpriseFramePrefab);
-        newFrame.GetComponent<CanvasScaler>().scaleFactor = 0.8f;
-        print("Hello World!");
+    public GameObject surpriseFramePrefab;   // Prefab used for dialog prompts.
+    public List<Sprite> images;              // List of possible images for dialog prompt descriptions.
+    private List<GameObject> surpriseFrames; // Current list of all active Surprise Event dialog prompts.
+
+    
+    /////////////////
+    // Constructor //
+    /////////////////
+    public SurpriseManager() {
+        this.surpriseFrames = new List<GameObject>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Awake() {
+        if (Smanager != null && Smanager != this){
+            Destroy(this.gameObject);
+        }
+        else {
+            Smanager = this;
+        }
+    }
+
+    void Start() {
         
     }
 
+    void Update() {
+        
+    }
+
+    ///////////////////////////////////////////////
+    // PostSurprise()                            //
+    //   Surprise s: The Surprise to show.       //
+    //                                           //
+    // Shows a new Surprise Event dialog prompt. //
+    ///////////////////////////////////////////////
+    public void PostSurprise(Surprise s) {
+        GameObject newSurpriseFrame = Instantiate(this.surpriseFramePrefab);
+        /* title */ newSurpriseFrame.transform.GetChild(1).gameObject.GetComponent<Text>().text = s.title;
+        /* desc  */ newSurpriseFrame.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = s.desc;
+        /* img   */ newSurpriseFrame.transform.GetChild(2).GetChild(1).gameObject.GetComponent<Image>().sprite = this.images[s.img];
+        
+        /* choice */
+        if (s.choice) {
+            newSurpriseFrame.transform.GetChild(3).gameObject.SetActive(true);
+            newSurpriseFrame.transform.GetChild(4).gameObject.SetActive(true);
+            newSurpriseFrame.transform.GetChild(5).gameObject.SetActive(false);
+        } else {
+            newSurpriseFrame.transform.GetChild(3).gameObject.SetActive(false);
+            newSurpriseFrame.transform.GetChild(4).gameObject.SetActive(false);
+            newSurpriseFrame.transform.GetChild(5).gameObject.SetActive(true);
+        }
+
+        /* noTitle */ newSurpriseFrame.transform.GetChild(5).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.noTitle;
+        /* noDesc  */ newSurpriseFrame.transform.GetChild(5).GetChild(1).gameObject.GetComponent<Text>().text = s.noDesc;
+        /* c1Title */ newSurpriseFrame.transform.GetChild(3).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c1Title;
+        /* c1Desc  */ newSurpriseFrame.transform.GetChild(3).GetChild(1).gameObject.GetComponent<Text>().text = s.c1Desc;
+        /* c2Title */ newSurpriseFrame.transform.GetChild(4).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c2Title;
+        /* c2Desc  */ newSurpriseFrame.transform.GetChild(4).GetChild(1).gameObject.GetComponent<Text>().text = s.c2Desc;
+        
+        newSurpriseFrame.GetComponent<CanvasScaler>().scaleFactor = 0.8f;
+        this.surpriseFrames.Add(newSurpriseFrame);
+    }
 }
+
 
 /////////////////////////////////////////////
 // class Surprise                          //
 //                                         //
 // Container object for a Surprise prompt. //
 // Contains text, images, and config.      //
+// TODO: implement choice resource changes //
 /////////////////////////////////////////////
-//public class Surprise {
-//    public GameObject framePrefab;         // Prefab used for dialog prompts.
-//    public readonly GameObject currFrame;  // GameObj for dialog prompt. gameObject.SetActive() is toggled to show/hide prompt.
-//    public readonly bool visible = false;  // Is the dialog prompt currently showing?
+public class Surprise {
+    public string title; // Title text of prompt.
+    public string desc;  // Description text of prompt.
+    public int img;      // Description image. Index into list.
     
-//    public readonly string title; // Title text of prompt.
-//    public readonly string desc;  // Description text of prompt.
-//    public readonly int img;      // Description image. Index into list.
-    
-//    public readonly bool choice;    // Whether or not this surprise has choices.
-//    public readonly string noTitle; // Button text for no-choice surprises.
-//    public readonly string noDesc;  // Description text for no-choice surprises.
-//    public readonly string 1cTitle; // Button text for choice 1.
-//    public readonly string 1cDesc;  // Description text for choice 1.
-//    public readonly string 2cTitle; // Button text for choice 2
-//    public readonly string 2cDesc;  // Description text for choice 2.
+    public bool choice;    // Whether or not this surprise has choices.
+    public string noTitle; // Button text for no-choice surprises.
+    public string noDesc;  // Description text for no-choice surprises.
+    public string c1Title; // Button text for choice 1.
+    public string c1Desc;  // Description text for choice 1.
+    public string c2Title; // Button text for choice 2
+    public string c2Desc;  // Description text for choice 2.
 
 
-//    /////////////////////////////////////////////////////
-//    // Constructor                                     //
-//    //                                                 //
-//    // After construction, use functions to configure. //
-//    /////////////////////////////////////////////////////
-//    public Surprise(GameObject framePrefab) {
-//        this.framePrefab = framePrefab;
-//        this.currFrame = Instantiate(framePrefab);
-//        this.currFrame.GetComponent<CanvasScaler>().scaleFactor = 0.8f;
-//        this.currFrame.SetActive(false);
-//    }
+    /////////////////
+    // Constructor //
+    /////////////////
+    public Surprise(string title = "Huey Dies!",
+                    string desc  = "Huey died. Should we take his dog in, or sell it for wood?",
+                    int img      = 0,
+                    
+                    bool choice    = false,
+                    string noTitle = "Wtf",
+                    string noDesc  = "Haha just kidding. You have no choice. Get rekt scrub.",
+                    string c1Title = "Take Dog In",
+                    string c1Desc  = "+1 Doge",
+                    string c2Title = "Sell The Dog",
+                    string c2Desc  = "+1 Wood") {
+        this.title = title;
+        this.desc  = desc;
+        this.img   = img;
 
-//    /////////////////////////
-//    // ShowPrompt()        //
-//    //                     //
-//    // Show dialog prompt. //
-//    /////////////////////////
-//    public ShowPrompt() {
-//        this.visible = true;
-//        this.currFrame.SetActive(true);
-//    }
-
-//    //////////////////////////////////////////////////////////
-//    // HidePrompt()                                         //
-//    //                                                      //
-//    // Hide dialog prompt.                                  //
-//    // Also called when clicking a choice or accept button. //
-//    //////////////////////////////////////////////////////////
-//    public HidePrompt() {
-//        this.visible = false;
-//        this.currFrame.SetActive(false);
-//    }
-    
-//    //////////////////////////////////////////////////////////////////////////
-//    // SetProperty()                                                        //
-//    //   string property: The class property to modify.                     //
-//    //   |int, string, bool| value: The value to assign to the property.    //
-//    //                                                                      //
-//    // Updates a class property, and updates the frame display accordingly. //
-//    //////////////////////////////////////////////////////////////////////////
-//    // public SetProperty(string property, int value) {
-//    // }
-//}
+        this.choice  = choice;
+        this.noTitle = noTitle;
+        this.noDesc  = noDesc;
+        this.c1Title = c1Title;
+        this.c1Desc  = c1Desc;
+        this.c2Title = c2Title;
+        this.c2Desc  = c2Desc;
+    }
+}
