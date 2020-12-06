@@ -210,7 +210,7 @@ public class Guard : MonoBehaviour
     private void talkHireGuard()
     {
         Surprise surprise1 = new Surprise(
-            "Fisherwoman Mann",
+            "FISHERWOMAN MANN",
             "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
                 "women, man.\n" +
                 "If you get me a house, I might be able to join your village.",
@@ -228,7 +228,7 @@ public class Guard : MonoBehaviour
     private void talkNotEnough()
     {
         Surprise surprise1 = new Surprise(
-            "Fisherwoman Mann",
+            "FISHERWOMAN MANN",
             "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
                 "women, man.\n" +
                 "If you get me a house, I might be able to join your village.",
