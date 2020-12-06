@@ -36,6 +36,7 @@ public class Bank : MonoBehaviour, IBuilding
 
     public bool isCaptchaRequired = false;
     public int lastCaptchaAnswer;
+    public int successfulAnswers = 0;
 
 
     void Awake()
@@ -77,7 +78,7 @@ public class Bank : MonoBehaviour, IBuilding
                 else if (IsBuilt && !bankIsOpen)
                 {
                     BuildingUiManager.buildingUi.BankUi.SetActive(true);
-                    if (isCaptchaRequired) {
+                    if (isCaptchaRequired && successfulAnswers < 1) {
                         BuildingUiManager.buildingUi.BankUi.transform.GetChild(5).gameObject.SetActive(true);
                         randomMathProblem();
                     }
@@ -204,16 +205,30 @@ public class Bank : MonoBehaviour, IBuilding
 
 
     public void TestAnswer() {
-            int a = 0;
-            
-            bool success = int.TryParse(BuildingUiManager.buildingUi.BankUi.transform.GetChild(5).GetChild(5).GetChild(2).gameObject.GetComponent<Text>().text, out a);
+        int a = 0;
+        
+        bool success = int.TryParse(BuildingUiManager.buildingUi.BankUi.transform.GetChild(5).GetChild(5).GetChild(2).gameObject.GetComponent<Text>().text, out a);
 
-            if (success) {
-                if (a == lastCaptchaAnswer) {
-                    BuildingUiManager.buildingUi.BankUi.transform.GetChild(5).gameObject.SetActive(false);
+        if (success) {
+            if (a == lastCaptchaAnswer) {
+                BuildingUiManager.buildingUi.BankUi.transform.GetChild(5).gameObject.SetActive(false);
+                successfulAnswers++;
+
+                if (successfulAnswers >= 1) {
+                    Surprise surprise2 = new Surprise(
+                        "",
+                        "Your credit score has recovered.",
+                        30,
+                        0, //Fence
+                        false,
+
+                        "Wow",
+                        "You no longer have to fill out math problems.",
+                        null
+                    );
+                    SurpriseManager.Smanager.PostSurprise(surprise2, true);
                 }
             }
-
-            Debug.Log("Test");
+        }
     }
 }

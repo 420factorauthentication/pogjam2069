@@ -48,27 +48,7 @@ public class WoodManager : MonoBehaviour
     {
         Wood += woodToAdd;
         CheckBuilding();
-        Debug.Log("Wood: " + Wood.ToString());
-
-        // Wood Event 1: First worker at 20 wood + stockpile building
-        if (Wood >= 20 && !didStockpileEvent) {
-            if(GameObject.Find("Storage").GetComponent<Storage>().IsBuilt) {
-                postStockpileEvent();
-            }
-        }
-
-        // Wood Event 2: Unlock robots at 200 wood + mine building
-        if(WoodFromMine >= 200 && !didMineEvent) {
-            if(GameObject.Find("Mine").GetComponent<Mine>().IsBuilt) {
-                postMineEvent();
-            }
-        }
-
-        // Wood Event 2: Unlock robots at 200 wood + mine building
-        if (WoodFromCasino <= -400 && !didCasinoEvent)
-        {
-            postcasinoEvent();
-        }
+        Debug.Log("Wood: " + Wood.ToString());        
 
         if (isFromMine)
         {
@@ -139,22 +119,24 @@ public class WoodManager : MonoBehaviour
 
     private void EventCheck()
     {
-        if(Wood > 20 && !didStockpileEvent)
-        {
-            if(buildings.Find(x => x.GetComponent<Storage>() != null) != null)
-            {
-                // put event data here
-                didStockpileEvent = true;
+        // Wood Event 1: First worker at 20 wood + stockpile building
+        if (Wood >= 7 && !didStockpileEvent) {
+            if(GameObject.Find("Storage").GetComponent<Storage>().IsBuilt) {
+                postStockpileEvent();
             }
         }
-        if(Wood > 200 && !didMineEvent)
-        {
-            didMineEvent = true;
+
+        // Wood Event 2: Unlock robots at 200 wood + mine building
+        if(WoodFromMine >= 200 && !didMineEvent) {
+            if(GameObject.Find("Mine").GetComponent<Mine>().IsBuilt) {
+                postMineEvent();
+            }
         }
-        if(WoodFromCasino <= -400 && !didCasinoEvent)
+
+        // Wood Event 3: Casino
+        if (WoodFromCasino <= -400 && !didCasinoEvent)
         {
-            // do casino losing event
-            didCasinoEvent = true;
+            postcasinoEvent();
         }
     }
 
