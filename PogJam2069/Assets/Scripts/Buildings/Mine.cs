@@ -20,6 +20,7 @@ public class Mine : MonoBehaviour, IBuilding
     public Text notifTextBox;
     public int woodFerried = 0;
     public bool canBebuilt = false;
+    public BlackSmith bs;
 
     private bool canPressF = false;
 
@@ -38,6 +39,13 @@ public class Mine : MonoBehaviour, IBuilding
             if (Input.GetKeyDown(KeyCode.F) && WoodManager.Wmanager.Wood >= Cost)
             {
                 BuildBuilding();
+            }
+        }
+        if(IsBuilt)
+        {
+            if(bs.didGuardEvet && !bs.guard2.isActiveAndEnabled)
+            {
+                bs.guard2.gameObject.SetActive(true);
             }
         }
     }
