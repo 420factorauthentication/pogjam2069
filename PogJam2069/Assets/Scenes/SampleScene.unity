@@ -5998,6 +5998,7 @@ MonoBehaviour:
   gain: 0
   anim: {fileID: 757470056}
   gainSnippet: {fileID: 757470053}
+  canBeBuilt: 0
   isCaptchaRequired: 0
   lastCaptchaAnswer: 0
 --- !u!61 &293693167
@@ -6578,6 +6579,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f6fc14e9e5dc20b43a55425c054114a9, type: 3}
   - {fileID: 21300000, guid: b635f332b22c5a3479f17d07def3e1eb, type: 3}
   - {fileID: 21300000, guid: e1b9bb38f089ecd4d99c9e7968699dbd, type: 3}
+  - {fileID: 21300000, guid: e70c4e7b67f2c93479594e7d40fd3986, type: 3}
+  - {fileID: 21300000, guid: b635f332b22c5a3479f17d07def3e1eb, type: 3}
+  - {fileID: 21300000, guid: 797f56ac2d9271f47926e8e7afa42340, type: 3}
   anim: {fileID: 0}
 --- !u!114 &315779074
 MonoBehaviour:
@@ -10961,6 +10965,7 @@ MonoBehaviour:
   builtSprite: {fileID: 85563936}
   notifTextBox: {fileID: 313508150}
   canBeBuilt: 0
+  didGuardEvet: 0
   guard1: {fileID: 0}
   guard2: {fileID: 0}
 --- !u!61 &530368464
@@ -41903,6 +41908,7 @@ MonoBehaviour:
   notifTextBox: {fileID: 1511014441}
   woodFerried: 0
   canBebuilt: 0
+  bs: {fileID: 0}
 --- !u!4 &2112821652
 Transform:
   m_ObjectHideFlags: 0
