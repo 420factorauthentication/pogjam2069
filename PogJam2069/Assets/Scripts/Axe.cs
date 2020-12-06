@@ -57,7 +57,7 @@ public class Axe : MonoBehaviour
         foreach(Collider2D thingsHit in hitobjects)
         {
             thingsHit.GetComponent<AxeHitabble>().axeHit();
-            Debug.Log(thingsHit.name);
+            //Debug.Log(thingsHit.name);
         }
     }
 

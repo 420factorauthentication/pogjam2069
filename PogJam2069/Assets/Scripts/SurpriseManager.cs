@@ -39,13 +39,14 @@ public class SurpriseManager : MonoBehaviour {
     }
 
 
-    ///////////////////////////////////////////////
-    // PostSurprise()                            //
-    //   Surprise s: The Surprise to show.       //
-    //                                           //
-    // Shows a new Surprise Event dialog prompt. //
-    ///////////////////////////////////////////////
-    public void PostSurprise(Surprise s) {
+    ///////////////////////////////////////////////////////////////
+    // PostSurprise()                                            //
+    //   Surprise s: The Surprise to show.                       //
+    //   bool hide: If true, hides dialog after clicking button. //
+    //                                                           //
+    // Shows a new Surprise Event dialog prompt.                 //
+    ///////////////////////////////////////////////////////////////
+    public void PostSurprise(Surprise s, bool hide) {
         // Unhide SurpriseCanvas
         for (var i = (SurpriseCanvas.Scanvas.transform.childCount - 1); i >= 0; i-- ) {
             SurpriseCanvas.Scanvas.transform.GetChild(i).gameObject.SetActive(true);
@@ -85,15 +86,17 @@ public class SurpriseManager : MonoBehaviour {
         /* c2Func  */ if (s.c2Func != null) {SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c2Func);}
         
 
-        // Close dialog onClick
-        UnityAction closeSurpriseDialog = new UnityAction(delegate() {
-            for (var i = (SurpriseCanvas.Scanvas.transform.childCount - 1); i >= 0; i-- ) {
-                SurpriseCanvas.Scanvas.transform.GetChild(i).gameObject.SetActive(false);
-            }
-        });
-        SurpriseCanvas.Scanvas.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
-        SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
-        SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+        // If hide == true, Close dialog onClick
+        if (hide == true) {
+            UnityAction closeSurpriseDialog = new UnityAction(delegate() {
+                for (var i = (SurpriseCanvas.Scanvas.transform.childCount - 1); i >= 0; i-- ) {
+                    SurpriseCanvas.Scanvas.transform.GetChild(i).gameObject.SetActive(false);
+                }
+            });
+            SurpriseCanvas.Scanvas.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+            SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+        }
     }
 }
 
