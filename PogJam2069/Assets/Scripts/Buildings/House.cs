@@ -18,6 +18,7 @@ public class House : MonoBehaviour, IBuilding
     public GameObject BuildingCanvas;
     public GameObject builtSprite;
     public Text notifTextBox;
+    public bool isNpcHouse = true;
 
     private bool canPressF = false;
 
@@ -64,6 +65,10 @@ public class House : MonoBehaviour, IBuilding
             BuildingCanvas.SetActive(false);
 
             IsBuilt = true;
+            if(isNpcHouse)
+            {
+                NpcManager.npcManager.AddNpcHouse(this);
+            }
         }
     }
 
