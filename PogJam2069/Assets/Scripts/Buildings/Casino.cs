@@ -18,6 +18,7 @@ public class Casino : MonoBehaviour, IBuilding
     public GameObject BuildingCanvas;
     public GameObject builtSprite;
     public Text notifTextBox;
+    public GameObject FabovePlayer;
 
     private bool canPressF = false;
     private bool casinoIsOpen = false;
@@ -84,6 +85,10 @@ public class Casino : MonoBehaviour, IBuilding
         if (collision.tag == "Player")
         {
             canPressF = true;
+            if(IsBuilt)
+            {
+                FabovePlayer.SetActive(true);
+            }
         }
     }
 
@@ -92,6 +97,7 @@ public class Casino : MonoBehaviour, IBuilding
         if (collision.tag == "Player")
         {
             canPressF = false;
+            FabovePlayer.SetActive(false);
         }
     }
 }

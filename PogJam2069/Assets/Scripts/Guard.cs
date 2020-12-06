@@ -14,6 +14,8 @@ public class Guard : MonoBehaviour
     public bool isMovingToPoint = false;
     public float speed = 1.5f;
 
+    public GameObject FabovePlayer;
+
     public static int numberShotsFired = 0;
     public static bool didbankevennt = false;
 
@@ -117,6 +119,7 @@ public class Guard : MonoBehaviour
         if(collision.tag == "Player")
         {
             canPressF = true;
+            FabovePlayer.SetActive(true);
         }
     }
 
@@ -125,6 +128,7 @@ public class Guard : MonoBehaviour
         if (collision.tag == "Player")
         {
             canPressF = false;
+            FabovePlayer.SetActive(false);
         }
     }
 
@@ -232,7 +236,7 @@ public class Guard : MonoBehaviour
             "FISHERWOMAN MANN",
             "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
                 "women, man.\n" +
-                "If you get me a house, I might be able to join your village.",
+                "If you pay me 40 wood, I might be able to help with your bandit problem.",
             30,
             15, //Player
             false,

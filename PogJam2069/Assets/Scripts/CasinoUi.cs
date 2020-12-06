@@ -17,6 +17,8 @@ public class CasinoUi : MonoBehaviour
     public Text midWoodText;
     public Text highWoodText;
 
+    public Text wood;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +71,7 @@ public class CasinoUi : MonoBehaviour
         {
             Debug.Log("haha you lost");
         }
+        UpdateWood();
     }
 
     public void DoMidWoodRool()
@@ -86,6 +89,7 @@ public class CasinoUi : MonoBehaviour
         {
             Debug.Log("haha you lost");
         }
+        UpdateWood();
     }
 
     public void DoHighWoodRool()
@@ -103,5 +107,11 @@ public class CasinoUi : MonoBehaviour
         {
             Debug.Log("haha you lost");
         }
+        UpdateWood();
+    }
+
+    private void UpdateWood()
+    {
+        wood.text = "Wood: " + WoodManager.Wmanager.Wood.ToString();
     }
 }
