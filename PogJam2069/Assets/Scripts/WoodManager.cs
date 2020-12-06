@@ -11,11 +11,13 @@ public class WoodManager : MonoBehaviour
     public int Wood;
     public int WoodFromMine = 0;
     public int WoodFromTreeFromNpc = 0;
+    public int WoodFromCasino = 0;
     public List<GameObject> buildings;
 
     // Events //
     private bool didWoodStockpileEvent = false;
     private bool didMineEvent = false;
+    private bool didCasinoEvent = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,11 +38,23 @@ public class WoodManager : MonoBehaviour
 
     }
 
-    public void addWood(int woodToAdd, bool isFromMine = false, bool isFromTree = false)
+    public void addWood(int woodToAdd, bool isFromMine = false, bool isFromTree = false, bool isFromCasino=false)
     {
         Wood += woodToAdd;
         CheckBuilding();
-        Debug.Log("Wood: " + Wood.ToString());
+        if(isFromMine)
+        {
+            WoodFromMine += woodToAdd;
+        }
+        if(isFromTree)
+        {
+            WoodFromTreeFromNpc += woodToAdd;
+        }
+        if(isFromCasino)
+        {
+            WoodFromCasino += woodToAdd;
+        }
+        EventCheck();
     }
 
     public void SubtractWood(int woodToSubtrack)
@@ -54,6 +68,7 @@ public class WoodManager : MonoBehaviour
             Wood = 0;
         }
         CheckBuilding();
+        EventCheck();
     }
 
     public void PurchaseWithWood(int woodToSubtrack)
@@ -63,6 +78,7 @@ public class WoodManager : MonoBehaviour
             Wood -= woodToSubtrack;
         }
         CheckBuilding();
+        EventCheck();
     }
 
     private void CheckBuilding()
@@ -85,7 +101,12 @@ public class WoodManager : MonoBehaviour
         }
         if(Wood > 200 && !didMineEvent)
         {
-
+            didMineEvent = true;
+        }
+        if(WoodFromCasino <= -400 && !didCasinoEvent)
+        {
+            // do casino losing event
+            didCasinoEvent = true;
         }
     }
 
