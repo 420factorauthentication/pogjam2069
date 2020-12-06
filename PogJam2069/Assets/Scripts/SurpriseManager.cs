@@ -55,10 +55,14 @@ public class SurpriseManager : MonoBehaviour {
     ///////////////////////////////////////////////////////////////
     public void PostSurprise(Surprise s, bool hide) {
         // Unhide SurpriseCanvas
-        for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i-- ) {
-            SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+        if (!SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(0).gameObject.activeSelf) {
+            anim.SetTrigger("open");
+
+            for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i-- ) {
+                SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
+            }
         }
-        anim.SetTrigger("open");
+        
 
         // Reset all onClick delegates
         SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -97,7 +101,15 @@ public class SurpriseManager : MonoBehaviour {
 
         // If hide == true, Close dialog onClick
         if (hide == true) {
-            StartCoroutine(CloseAnimation());
+            UnityAction closeSurpriseDialog = new UnityAction(delegate () {
+                for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i--) {
+                    StartCoroutine(CloseAnimation());
+                }
+            });
+
+            SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+            SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+            SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
         }
     }
 
@@ -106,19 +118,13 @@ public class SurpriseManager : MonoBehaviour {
         anim.SetTrigger("close");
 
         yield return new WaitForSeconds(1);
-        UnityAction closeSurpriseDialog = new UnityAction(delegate () {
-            for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i--)
-            {
-                SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
-            }
-        });
-        SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
-        SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
-        SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+        
+        for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i-- ) {
+            SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+        }
 
         yield return null;
     }
-
 }
 
 
