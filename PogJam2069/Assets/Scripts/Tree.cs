@@ -89,6 +89,9 @@ public class Tree : MonoBehaviour
         WoodManager.Wmanager.addWood(woodToGive);
         treeisDead = true;
         currenthits = 0;
+
+        //sfx
+        AudioManager.Amanager.treeFall();
         
         // Tree Event 1: Lootbox at 1 Chop
         if (totalChops >= 1 && !didTreeEvent1) { PostTreeEvent1(); }
@@ -208,7 +211,7 @@ public class Tree : MonoBehaviour
                     "eunitnoC",
                     "ssergorP yretsyM eerT 0+",
                     new UnityAction(delegate () {
-                        // MirrorMovement()   ADD FUNCTION TO MIRROR MOVEMENT CONTROLS
+                        NpcManager.npcManager.MirrorMovement();
                     })
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise6, true);

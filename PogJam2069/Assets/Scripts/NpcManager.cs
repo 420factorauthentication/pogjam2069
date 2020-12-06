@@ -6,6 +6,9 @@ public class NpcManager : MonoBehaviour
 {
     public static NpcManager npcManager;
 
+    // for player movement im tired so im putting it here
+    public bool isMirrored = false;
+
     // match npcs to npc houses 1 to one even if they aren't there yet. 
     public List<BaseSlave> allNpcs;
     public List<House> allNpcHouses;
@@ -45,5 +48,13 @@ public class NpcManager : MonoBehaviour
     public void AddNpcHouse(House house)
     {
         allNpcHouses.Add(house);
+    }
+
+    // for player movement im tired so im putting it here
+    public void MirrorMovement() {
+        if (NpcManager.npcManager.isMirrored)
+            NpcManager.npcManager.isMirrored = false;
+        else
+            NpcManager.npcManager.isMirrored = true;
     }
 }

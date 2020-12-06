@@ -59,6 +59,9 @@ public class Axe : MonoBehaviour
             thingsHit.GetComponent<AxeHitabble>().axeHit();
             //Debug.Log(thingsHit.name);
         }
+
+        if (hitobjects.Length > 0)
+            AudioManager.Amanager.axeChop();
     }
 
     private void OnDrawGizmosSelected()
