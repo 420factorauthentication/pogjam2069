@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;   //SceneManager.LoadSceneAsync()
 
 public class MenuButton : MonoBehaviour
 {
+   public Animator anim;
     public void StartGame() {
-        SceneManager.LoadSceneAsync("SampleScene");
+
+
+        StartCoroutine(StartGgame());
+
         AudioManager.Amanager.playClickButton();
     }
 
@@ -28,5 +32,16 @@ public class MenuButton : MonoBehaviour
 
     public void HoverSound() {
         AudioManager.Amanager.playHoverButton();
+    }
+
+    IEnumerator StartGgame()
+
+
+    {
+        anim.SetTrigger("asdf");
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadSceneAsync("SampleScene");
+        yield return null;
+
     }
 }
