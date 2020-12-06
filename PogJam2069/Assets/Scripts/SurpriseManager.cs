@@ -10,7 +10,7 @@ public class SurpriseManager : MonoBehaviour {
 
     public GameObject surpriseFramePrefab; // Prefab used for dialog prompts.
     public List<Sprite> images;            // List of possible images for dialog prompt descriptions.
-
+    public Animator anim;
     
     /////////////////
     // Constructor //
@@ -27,6 +27,7 @@ public class SurpriseManager : MonoBehaviour {
     void Start() {
         // Initialize canvas objects
         GameObject newSurpriseFrame = Instantiate(this.surpriseFramePrefab);
+        anim = newSurpriseFrame.GetComponent<Animator>();
         for (var i = (newSurpriseFrame.transform.childCount - 1); i >= 0; i-- ) {
             newSurpriseFrame.transform.GetChild(0).gameObject.SetActive(false);
             newSurpriseFrame.transform.GetChild(0).SetParent(SurpriseCanvas.Scanvas.transform, true);

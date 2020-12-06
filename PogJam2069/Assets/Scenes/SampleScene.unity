@@ -1804,6 +1804,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f6fc14e9e5dc20b43a55425c054114a9, type: 3}
   - {fileID: 21300000, guid: b635f332b22c5a3479f17d07def3e1eb, type: 3}
   - {fileID: 21300000, guid: e1b9bb38f089ecd4d99c9e7968699dbd, type: 3}
+  anim: {fileID: 0}
 --- !u!114 &315779074
 MonoBehaviour:
   m_ObjectHideFlags: 0
