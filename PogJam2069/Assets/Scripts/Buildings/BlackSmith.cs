@@ -106,6 +106,6 @@ public class BlackSmith : MonoBehaviour, IBuilding
             "",
             null
         );
-        SurpriseManager.Smanager.PostSurprise(surprise1, false);
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
     }
 }
