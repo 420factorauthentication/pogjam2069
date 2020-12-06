@@ -19,6 +19,7 @@ public class BlackSmith : MonoBehaviour, IBuilding
     public GameObject builtSprite;
     public Text notifTextBox;
     public bool canBeBuilt = false;
+    public bool didGuardEvet = false;
 
     // every guard that you can get and change how they spawn in as you like
     public Guard guard1;
@@ -70,6 +71,7 @@ public class BlackSmith : MonoBehaviour, IBuilding
 
             IsBuilt = true;
             guard1.gameObject.SetActive(true);
+            postBlackAndMineEvent();
         }
     }
 
@@ -87,5 +89,23 @@ public class BlackSmith : MonoBehaviour, IBuilding
         {
             canPressF = false;
         }
+    }
+
+    private void postBlackAndMineEvent()
+    {
+        didGuardEvet = true;
+        guard1.gameObject.SetActive(true);
+        Surprise surprise1 = new Surprise(
+            "No Swiping!",
+            "There have been some recent cases of bandits appearing and stopping your wood productions! Thankfully, you can hire some guards in front of the blacksmith to help you out.",
+            30,
+            3, //blacksmith
+            false,
+
+            "Nice!",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, false);
     }
 }

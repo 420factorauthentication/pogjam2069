@@ -49,6 +49,7 @@ public class Skyscraper : MonoBehaviour, IBuilding
             if(timeSinceLast > woodRate)
             {
                 WoodManager.Wmanager.addWood(woodAmount[buildingLevel - 1]);
+                timeSinceLast = 0f;
             }
             timeSinceLast += Time.deltaTime;
         }
