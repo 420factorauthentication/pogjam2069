@@ -7,10 +7,13 @@ public class Cloud : MonoBehaviour
 
     public float speed;
     public Vector3 CloudDirection;
+    private Vector3 playerTransform;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Vector3 dir = (playerTransform - gameObject.transform.position).normalized;
+        CloudDirection = new Vector3(dir.x, dir.y, 0);
     }
 
     // Update is called once per frame
