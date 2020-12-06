@@ -27,7 +27,7 @@ public class SurpriseManager : MonoBehaviour {
     void Start() {
         // Initialize canvas objects
         GameObject newSurpriseFrame = Instantiate(this.surpriseFramePrefab);
-        anim = newSurpriseFrame.GetComponent<Animator>();
+        
         for (var i = (newSurpriseFrame.transform.childCount - 1); i >= 0; i-- ) {
             newSurpriseFrame.transform.GetChild(0).SetParent(SurpriseCanvas.Scanvas.transform, true);
         }
@@ -39,6 +39,10 @@ public class SurpriseManager : MonoBehaviour {
 
     void Update() {
         
+    }
+    public void setAnimator(Animator animtoset)
+    {
+        anim = animtoset;
     }
 
 
@@ -54,6 +58,7 @@ public class SurpriseManager : MonoBehaviour {
         for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i-- ) {
             SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(i).gameObject.SetActive(true);
         }
+        anim.SetTrigger("open");
 
         // Reset all onClick delegates
         SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -92,17 +97,31 @@ public class SurpriseManager : MonoBehaviour {
 
         // If hide == true, Close dialog onClick
         if (hide == true) {
-            UnityAction closeSurpriseDialog = new UnityAction(delegate() {
-                for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i-- ) {
-                    SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
-                }
-            });
-            SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
-            SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
-            SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+            StartCoroutine(CloseAnimation());
         }
     }
+
+    IEnumerator CloseAnimation()
+    {
+        anim.SetTrigger("close");
+
+        yield return new WaitForSeconds(1);
+        UnityAction closeSurpriseDialog = new UnityAction(delegate () {
+            for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i--)
+            {
+                SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+            }
+        });
+        SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+        SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+        SurpriseCanvas.Scanvas.transform.GetChild(0).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+
+        yield return null;
+    }
+
 }
+
+
 
 
 /////////////////////////////////////////////
