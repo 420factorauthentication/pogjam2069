@@ -209,7 +209,7 @@ public class WoodManager : MonoBehaviour
                     "Oof",
                     "You now have to solve a math problem every time you use " +
                         "the Bank.",
-                    null //new UnityAction(delegate () { EnableBankCaptcha; })    ADD FUNCTION TO ENABLE BANK CAPTCHA
+                    new UnityAction(delegate () { Bank.bank.isCaptchaRequired = true; })
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise3, true);
             })
