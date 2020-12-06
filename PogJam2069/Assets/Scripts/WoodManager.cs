@@ -12,7 +12,6 @@ public class WoodManager : MonoBehaviour
     public List<GameObject> buildings;
 
     // Events //
-    private bool didWoodSurprise1 = true;
     private bool didWoodStockpileEvent = false;
     private bool didMineEvent = false;
 
@@ -39,31 +38,7 @@ public class WoodManager : MonoBehaviour
     {
         Wood += woodToAdd;
         CheckBuilding();
-
-        // Wood Surprise 1
-        if (Wood >= 1 && !didWoodSurprise1)
-        {
-            didWoodSurprise1 = true;
-            SurpriseManager.Smanager.PostSurprise(new Surprise(
-                "Found a lootbox?",
-                "After chopping that last tree, you found a wooden loot box " +
-                  "buried in the soil behind it! What surprises could it hold?",
-                10,
-                true,
-
-                "",
-                "",
-                null,
-
-                "Open the lootbox!",
-                "Gain what's inside?",
-                new UnityAction(delegate () { print("YOU GOT PRANKD"); }),
-
-                "Sell the lootbox for wood",
-                "+1 Wood",
-                new UnityAction(delegate () { addWood(1); })
-            ));
-        }
+        Debug.Log("Wood: " + Wood.ToString());
     }
 
     public void SubtractWood(int woodToSubtrack)
