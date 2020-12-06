@@ -6,6 +6,7 @@ public class BanditSpawner : MonoBehaviour
 {
     public GameObject bandit;
     public float respawnRate = 35f;
+    public bool canSpawn = false;
 
     private float lastTimeSince = 0f;
 
@@ -18,13 +19,16 @@ public class BanditSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(lastTimeSince > respawnRate)
+        if(canSpawn)
         {
-            Instantiate(bandit,transform.position, Quaternion.identity);
-            Instantiate(bandit,transform.position, Quaternion.identity);
-            lastTimeSince = 0f;
-        }
+            if (lastTimeSince > respawnRate)
+            {
+                Instantiate(bandit, transform.position, Quaternion.identity);
+                Instantiate(bandit, transform.position, Quaternion.identity);
+                lastTimeSince = 0f;
+            }
 
-        lastTimeSince += Time.deltaTime;
+            lastTimeSince += Time.deltaTime;
+        }
     }
 }

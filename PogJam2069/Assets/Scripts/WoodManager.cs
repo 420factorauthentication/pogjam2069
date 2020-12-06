@@ -257,8 +257,8 @@ public class WoodManager : MonoBehaviour
                     24,
                     4, //Robot
                     false,
-                    "",
                     "Continue",
+                    "",
                     null //new UnityAction(delegate () { AddWorker(1); })    ADD FUNCTION TO ADD +1 WORKER
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise2, true);
@@ -276,8 +276,8 @@ public class WoodManager : MonoBehaviour
                     4, //robots
                     false,
 
-                    "",
                     "Continue",
+                    "",
                     null //new UnityAction(delegate () { EnableBankCaptcha; })    ADD FUNCTION TO ENABLE BANK CAPTCHA
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise3, true);
@@ -314,8 +314,8 @@ public class WoodManager : MonoBehaviour
                     24,
                     15, //Player
                     false,
-                    "",
                     "Continue",
+                    "",
                     null //new UnityAction(delegate () { AddWorker(1); })    ADD FUNCTION TO ADD +1 WORKER
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise2, true);
@@ -332,8 +332,8 @@ public class WoodManager : MonoBehaviour
                     21, //logs
                     false,
 
-                    "",
                     "Basically just got away with fraud, nice!",
+                    "",
                     null //new UnityAction(delegate () { EnableBankCaptcha; })    ADD FUNCTION TO ENABLE BANK CAPTCHA
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise3, true);

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class Casino : MonoBehaviour, IBuilding
+public class Castle : MonoBehaviour, IBuilding
 {
     [SerializeField]
     private string _buildingName;
@@ -15,9 +16,6 @@ public class Casino : MonoBehaviour, IBuilding
     public string BuildingName { get { return _buildingName; } set { _buildingName = value; } }
     public int Cost { get { return _cost; } set { _cost = value; } }
     public bool IsBuilt { get { return _isBuilt; } set { _isBuilt = value; } }
-    public GameObject BuildingCanvas;
-    public GameObject builtSprite;
-    public Text notifTextBox;
     public GameObject FabovePlayer;
 
     private bool canPressF = false;
@@ -26,8 +24,6 @@ public class Casino : MonoBehaviour, IBuilding
     // Start is called before the first frame update
     void Start()
     {
-        notifTextBox.text = Cost.ToString() + "Wood";
-        BuildingCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,20 +34,19 @@ public class Casino : MonoBehaviour, IBuilding
             if (Input.GetKeyUp(KeyCode.F))
             {
                 Debug.Log("hey");
-                if(!IsBuilt && WoodManager.Wmanager.Wood >= Cost)
+                if (!IsBuilt && WoodManager.Wmanager.Wood >= Cost)
                 {
                     BuildBuilding();
                 }
-                else if(IsBuilt && casinoIsOpen)
+                else if (IsBuilt && casinoIsOpen)
                 {
                     BuildingUiManager.buildingUi.CasinoUI.SetActive(false);
                     Time.timeScale = 1f;
                     casinoIsOpen = false;
                 }
-                else if(IsBuilt && !casinoIsOpen)
+                else if (IsBuilt && !casinoIsOpen)
                 {
                     BuildingUiManager.buildingUi.CasinoUI.SetActive(true);
-                    BuildingUiManager.buildingUi.CasinoUI.GetComponent<CasinoUi>().UpdateWood();
                     Time.timeScale = 0f;
                     casinoIsOpen = true;
                 }
@@ -63,8 +58,6 @@ public class Casino : MonoBehaviour, IBuilding
     {
         if (!IsBuilt && currWood >= Cost)
         {
-            BuildingCanvas.SetActive(true);
-            notifTextBox.text = Cost.ToString() + " Wood (F)";
 
         }
     }
@@ -74,9 +67,6 @@ public class Casino : MonoBehaviour, IBuilding
         if (!IsBuilt && WoodManager.Wmanager.Wood >= Cost)
         {
             WoodManager.Wmanager.PurchaseWithWood(Cost);
-            builtSprite.SetActive(true);
-            BuildingCanvas.SetActive(false);
-
             IsBuilt = true;
         }
     }
@@ -86,10 +76,7 @@ public class Casino : MonoBehaviour, IBuilding
         if (collision.tag == "Player")
         {
             canPressF = true;
-            if(IsBuilt)
-            {
-                FabovePlayer.SetActive(true);
-            }
+            FabovePlayer.SetActive(true);
         }
     }
 
@@ -100,5 +87,22 @@ public class Casino : MonoBehaviour, IBuilding
             canPressF = false;
             FabovePlayer.SetActive(false);
         }
+    }
+
+    private void endGame()
+    {
+        Surprise surprise1 = new Surprise(
+            "Wood You Look At That",
+            "You have dominated the wood kingdom.\n" +
+            "Congratulations!",
+            30,
+            23, //castle
+            false,
+
+            "Quit Game",
+            "",
+                                new UnityAction(delegate () { Application.Quit(); })
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
     }
 }

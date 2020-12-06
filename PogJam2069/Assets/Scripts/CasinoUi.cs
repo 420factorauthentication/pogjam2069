@@ -110,7 +110,7 @@ public class CasinoUi : MonoBehaviour
         UpdateWood();
     }
 
-    private void UpdateWood()
+    public void UpdateWood()
     {
         wood.text = "Wood: " + WoodManager.Wmanager.Wood.ToString();
     }

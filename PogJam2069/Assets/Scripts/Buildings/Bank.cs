@@ -111,7 +111,7 @@ public class Bank : MonoBehaviour, IBuilding
                 timeSinceLast += Time.deltaTime;
             }
         }
-        if(canBeBuilt && !wasPinged)
+        if(canBeBuilt && !IsBuilt && !wasPinged)
         {
             BuildingCanvas.SetActive(true);
             notifTextBox.text = Cost.ToString() + " Wood (F)";

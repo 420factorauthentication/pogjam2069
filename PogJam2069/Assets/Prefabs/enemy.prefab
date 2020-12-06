@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1826208431932435499}
   - component: {fileID: 1826208431932435498}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Arm Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 1826208432124873557}
   - component: {fileID: 1826208432124873558}
   - component: {fileID: 1826208432124873559}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 1826208433389664149}
   - component: {fileID: 1826208433389664150}
   - component: {fileID: 1826208433389664142}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
