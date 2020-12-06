@@ -12,6 +12,7 @@ public class WoodManager : MonoBehaviour
     public int WoodFromMine = 0;
     public int WoodFromTreeFromNpc = 0;
     public int WoodFromCasino = 0;
+    public int WoodFromBank = 0;
     public List<GameObject> buildings;
 
     // Events //
@@ -43,7 +44,7 @@ public class WoodManager : MonoBehaviour
     //                                                                        //
     // Adds wood, checks events, and checks if enough wood to build anything. //
     ////////////////////////////////////////////////////////////////////////////
-    public void addWood(int woodToAdd, bool isFromMine = false, bool isFromTree = false, bool isFromCasino=false)
+    public void addWood(int woodToAdd, bool isFromMine = false, bool isFromTree = false, bool isFromCasino=false, bool isFromBank=false)
     {
         Wood += woodToAdd;
         CheckBuilding();
@@ -74,6 +75,10 @@ public class WoodManager : MonoBehaviour
         if (isFromCasino)
         {
             WoodFromCasino += woodToAdd;
+        }
+        if(isFromBank)
+        {
+            WoodFromBank += woodToAdd;
         }
         EventCheck();
 

@@ -19,8 +19,13 @@ public class Bank : MonoBehaviour, IBuilding
     public GameObject builtSprite;
     public Text notifTextBox;
     public bool bankIsOpen = false;
+    public float rate = 30f;
+    public int gain = 0;
+    public Animator anim;
+    public Text gainSnippet;
 
     private bool canPressF = false;
+    private float timeSinceLast = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +59,43 @@ public class Bank : MonoBehaviour, IBuilding
                 }
             }
         }
+
+        if(IsBuilt)
+        {
+            if (timeSinceLast > rate && gain != 0)
+            {
+                float plusNeg = Random.Range(-0f, 1f) < 0.5 ? -1 : 1;
+                float rate = Random.Range(0.01f, 0.20f);
+
+                gain += (int)(gain * rate * plusNeg);
+                BuildingUiManager.buildingUi.BankUi.GetComponent<BankUI>().UpdateGain(gain);
+
+                gainSnippet.text = (gain * rate * plusNeg) > 0 ? "+" + (gain * rate * plusNeg).ToString() : (gain * rate * plusNeg).ToString();
+                anim.SetTrigger("show");
+                timeSinceLast = 0f;
+            }
+            else
+            {
+                timeSinceLast += Time.deltaTime;
+            }
+        }
+    }
+
+    public void CollectGain()
+    {
+        BuildingUiManager.buildingUi.BankUi.GetComponent<BankUI>().UpdateGain(0);
+        if(WoodManager.Wmanager.Wood + gain > 0)
+        {
+            WoodManager.Wmanager.addWood(gain, isFromBank: true);
+            gain = 0;
+        }
+    }
+
+    public void Deposit50Gold()
+    {
+        gain += 50;
+        WoodManager.Wmanager.SubtractWood(50);
+        BuildingUiManager.buildingUi.BankUi.GetComponent<BankUI>().UpdateGain(gain);
     }
 
     public void CheckCanBuild(int currWood)
