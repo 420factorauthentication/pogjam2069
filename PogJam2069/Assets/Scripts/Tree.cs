@@ -18,10 +18,11 @@ public class Tree : MonoBehaviour
     public Sprite TreeDead;
     private bool didTreeEvent1 = false;
     private bool didTreeEvent2 = false;
+    private bool didTreeEvent3 = false;
     public bool isGivingTree = false;
 
     public Animator anim;
-    private int totalChops = 0;
+    public int totalChops = 0;
 
 
     SpriteRenderer sr;
@@ -110,6 +111,9 @@ public class Tree : MonoBehaviour
 
         // Tree Event 2: Better Tree At 30 Chops
         if (totalChops >= 30 && !didTreeEvent2) { PostTreeEvent2(); }
+
+        // Tree Event 3: Surprise
+        if (isGivingTree && (!didTreeEvent3)) { PostTreeEvent3(); }
     }
 
     /////////////////////////////////////
@@ -233,6 +237,25 @@ public class Tree : MonoBehaviour
             })
         );
         SurpriseManager.Smanager.PostSurprise(surprise4, false);
+    }
+
+    ///////////////////////////////////////////
+    // Tree Event 3: Surprise //
+    ///////////////////////////////////////////
+    private void PostTreeEvent3() {
+        didTreeEvent3 = true;
+        Surprise surprise4 = new Surprise(
+            "Surprise",
+            "Surprise",
+            30,
+            10, //Cloud
+            false,
+
+            "Surprise",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise4, true);
     }
 
 

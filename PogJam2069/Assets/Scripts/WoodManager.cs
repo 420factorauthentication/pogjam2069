@@ -58,10 +58,16 @@ public class WoodManager : MonoBehaviour
         }
 
         // Wood Event 2: Unlock robots at 200 wood + mine building
-        if(Wood >= 200 && !didMineEvent) {
+        if(WoodFromMine >= 200 && !didMineEvent) {
             if(GameObject.Find("Mine").GetComponent<Mine>().IsBuilt) {
                 postMineEvent();
             }
+        }
+
+        // Wood Event 2: Unlock robots at 200 wood + mine building
+        if (WoodFromCasino <= -400 && !didCasinoEvent)
+        {
+            postcasinoEvent();
         }
 
         if (isFromMine)
@@ -272,6 +278,62 @@ public class WoodManager : MonoBehaviour
 
                     "",
                     "Continue",
+                    null //new UnityAction(delegate () { EnableBankCaptcha; })    ADD FUNCTION TO ENABLE BANK CAPTCHA
+                );
+                SurpriseManager.Smanager.PostSurprise(surprise3, true);
+            })
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, false);
+    }
+
+
+    // casino event
+    private void postcasinoEvent()
+    {
+        didCasinoEvent = true;
+        Surprise surprise1 = new Surprise(
+            "Right Back At Ya!",
+            "The Neighoring King is here, and he's FURIOUS. He just lost all of his kingdom in your casino, and is claiming that the casino is rigged.",
+            30,
+            20, //Casino
+            true,
+
+            "",
+            "",
+            null,
+
+            "Of course it's rigged it's a casino",
+            "what did you think would happen?",
+            // Choice 1: Gain first worker.
+            new UnityAction(delegate () {
+                NpcManager.npcManager.npc1.gameObject.SetActive(true);
+                NpcManager.npcManager.npc2.gameObject.SetActive(true);
+                Surprise surprise2 = new Surprise(
+                    "Wood War III",
+                    "The king has declared war on you. Not that it matters, you're still on his property",
+                    24,
+                    15, //Player
+                    false,
+                    "",
+                    "Continue",
+                    null //new UnityAction(delegate () { AddWorker(1); })    ADD FUNCTION TO ADD +1 WORKER
+                );
+                SurpriseManager.Smanager.PostSurprise(surprise2, true);
+            }),
+
+            "Maybe if you could scratch my back I could scratch yours?",
+            "Both literally and figuratively",
+            // Choice 2: Bank now requires solving a math problem to use it.
+            new UnityAction(delegate () {
+                Surprise surprise3 = new Surprise(
+                    "Right Back At Ya!",
+                    "You return some of the king's riches, but keep the rest. But you at least told him that you tried your best. ",
+                    30,
+                    21, //logs
+                    false,
+
+                    "",
+                    "Basically just got away with fraud, nice!",
                     null //new UnityAction(delegate () { EnableBankCaptcha; })    ADD FUNCTION TO ENABLE BANK CAPTCHA
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise3, true);

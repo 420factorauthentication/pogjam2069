@@ -33,7 +33,7 @@ public class SurpriseManager : MonoBehaviour {
         }
         Destroy(newSurpriseFrame);
         for (var j = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); j >= 0; j-- ) {
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(j).gameObject.SetActive(false);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(j).gameObject.SetActive(false);
         }
     }
 
@@ -55,61 +55,63 @@ public class SurpriseManager : MonoBehaviour {
     ///////////////////////////////////////////////////////////////
     public void PostSurprise(Surprise s, bool hide) {
         // Unhide SurpriseCanvas
-        if (!SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(0).gameObject.activeSelf) {
+        if (!SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(0).gameObject.activeSelf) {
             anim.SetTrigger("open");
 
-            for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(2).childCount - 1); i >= 0; i-- ) {
-                SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(i).gameObject.SetActive(true);
+            for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(3).childCount - 1); i >= 0; i-- ) {
+                SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(i).gameObject.SetActive(true);
             }
         }
         
 
         // Reset all onClick delegates
-        SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
 
         // Configure properties
-        /* title        */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(1).gameObject.GetComponent<Text>().text = s.title;
-        /* desc         */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = s.desc;
-        /* descFontSize */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(2).GetChild(0).gameObject.GetComponent<Text>().fontSize = s.descFontSize;
-        /* img          */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(2).GetChild(1).gameObject.GetComponent<Image>().sprite = this.images[s.img];
+        /* title        */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(1).gameObject.GetComponent<Text>().text = s.title;
+        /* desc         */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = s.desc;
+        /* descFontSize */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(2).GetChild(0).gameObject.GetComponent<Text>().fontSize = s.descFontSize;
+        /* img          */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(2).GetChild(1).gameObject.GetComponent<Image>().sprite = this.images[s.img];
         
         /* choice */
         if (s.choice) {
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(3).gameObject.SetActive(true);
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(4).gameObject.SetActive(true);
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(5).gameObject.SetActive(false);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(3).gameObject.SetActive(true);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(4).gameObject.SetActive(true);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(5).gameObject.SetActive(false);
         } else {
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(3).gameObject.SetActive(false);
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(4).gameObject.SetActive(false);
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(5).gameObject.SetActive(true);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(3).gameObject.SetActive(false);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(4).gameObject.SetActive(false);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(5).gameObject.SetActive(true);
         }
 
-        /* noTitle */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(5).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.noTitle;
-        /* noDesc  */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(5).GetChild(1).gameObject.GetComponent<Text>().text = s.noDesc;
-        /* noFunc  */ if (s.noFunc != null) {SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.noFunc);}
+        /* noTitle */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(5).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.noTitle;
+        /* noDesc  */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(5).GetChild(1).gameObject.GetComponent<Text>().text = s.noDesc;
+        /* noFunc  */ if (s.noFunc != null) {SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.noFunc);}
 
-        /* c1Title */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(3).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c1Title;
-        /* c1Desc  */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(3).GetChild(1).gameObject.GetComponent<Text>().text = s.c1Desc;
-        /* c1Func  */ if (s.c1Func != null) {SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c1Func);}
+        /* c1Title */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(3).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c1Title;
+        /* c1Desc  */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(3).GetChild(1).gameObject.GetComponent<Text>().text = s.c1Desc;
+        /* c1Func  */ if (s.c1Func != null) {SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c1Func);}
 
-        /* c2Title */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(4).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c2Title;
-        /* c2Desc  */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(4).GetChild(1).gameObject.GetComponent<Text>().text = s.c2Desc;
-        /* c2Func  */ if (s.c2Func != null) {SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c2Func);}
+        /* c2Title */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(4).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c2Title;
+        /* c2Desc  */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(4).GetChild(1).gameObject.GetComponent<Text>().text = s.c2Desc;
+        /* c2Func  */ if (s.c2Func != null) {SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c2Func);}
         
 
         // If hide == true, Close dialog onClick
         if (hide == true) {
             UnityAction closeSurpriseDialog = new UnityAction(delegate () {
-                for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(0).childCount - 1); i >= 0; i--) {
+                for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(3).childCount - 1); i >= 0; i--) {
                     StartCoroutine(CloseAnimation());
+
+                    print("CLOSE THIS S");
                 }
             });
 
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
         }
     }
 
@@ -119,8 +121,8 @@ public class SurpriseManager : MonoBehaviour {
 
         yield return new WaitForSeconds(1);
         
-        for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(2).childCount - 1); i >= 0; i-- ) {
-            SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(i).gameObject.SetActive(false);
+        for (var i = (SurpriseCanvas.Scanvas.transform.GetChild(3).childCount - 1); i >= 0; i-- ) {
+            SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(i).gameObject.SetActive(false);
         }
 
         yield return null;

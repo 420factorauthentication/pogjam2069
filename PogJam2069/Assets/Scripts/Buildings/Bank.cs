@@ -27,6 +27,9 @@ public class Bank : MonoBehaviour, IBuilding
     public int gain = 0;
     public Animator anim;
     public Text gainSnippet;
+    public bool canBeBuilt = false;
+
+    private bool wasPinged = false;
 
     private bool canPressF = false;
     private float timeSinceLast = 0f;
@@ -106,6 +109,12 @@ public class Bank : MonoBehaviour, IBuilding
             {
                 timeSinceLast += Time.deltaTime;
             }
+        }
+        if(canBeBuilt && !wasPinged)
+        {
+            BuildingCanvas.SetActive(true);
+            notifTextBox.text = Cost.ToString() + " Wood (F)";
+            wasPinged = true;
         }
     }
 
