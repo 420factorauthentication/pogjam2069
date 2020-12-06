@@ -27,7 +27,6 @@ public class Enemy : MonoBehaviour
     private int currentWaypoint = 0;
     private bool reachedEndOfPath = false;
     private float nextWaypointDistance = 1f;
-    private int counter = 0;
 
     // Start is called before the first frame update
     void Start()

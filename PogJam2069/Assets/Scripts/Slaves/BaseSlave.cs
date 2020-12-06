@@ -265,6 +265,10 @@ public class BaseSlave : MonoBehaviour
         {
             CanBeHired = true;
         }
+        if(collision.tag == "Enemy")
+        {
+            isMovingToDepot = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -272,6 +276,10 @@ public class BaseSlave : MonoBehaviour
         if(collision.tag == "Player")
         {
             CanBeHired = false;
+        }
+        if (collision.tag == "Enemy")
+        {
+            isMovingToDepot = false;
         }
     }
 }
