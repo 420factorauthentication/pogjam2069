@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Mine : MonoBehaviour, IBuilding
+public class Bank : MonoBehaviour, IBuilding
 {
     [SerializeField]
     private string _buildingName;

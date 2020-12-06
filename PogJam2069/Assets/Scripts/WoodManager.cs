@@ -9,6 +9,8 @@ public class WoodManager : MonoBehaviour
 
     // Resources //
     public int Wood;
+    public int WoodFromMine = 0;
+    public int WoodFromTreeFromNpc = 0;
     public List<GameObject> buildings;
 
     // Events //
@@ -35,10 +37,19 @@ public class WoodManager : MonoBehaviour
 
     }
 
-    public void addWood(int woodToAdd)
+    public void addWood(int woodToAdd, bool isFromMine = false, bool isFromTree = false)
     {
         Wood += woodToAdd;
         CheckBuilding();
+
+        if(isFromMine)
+        {
+            WoodFromMine += woodToAdd;
+        }
+        if(isFromTree)
+        {
+            WoodFromTreeFromNpc += woodToAdd;
+        }
 
         // Wood Surprise 1
         if (Wood >= 1 && !didWoodSurprise1)
