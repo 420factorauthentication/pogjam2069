@@ -54,14 +54,23 @@ public class Axe : MonoBehaviour
 
        Collider2D[] hitobjects = Physics2D.OverlapCircleAll(attackPoint.position, range,AxeHitLayer);
 
+        int hittables = 0;
+
         foreach(Collider2D thingsHit in hitobjects)
         {
             thingsHit.GetComponent<AxeHitabble>().axeHit();
             //Debug.Log(thingsHit.name);
+            hittables++;
         }
 
-        if (hitobjects.Length > 0)
-            AudioManager.Amanager.axeChop();
+        if (hittables > 0) {
+            if (GameObject.Find("Tree1").GetComponent<Tree>().isGivingTree) {
+                AudioManager.Amanager.givingTreeChop();
+            }
+            else {
+                AudioManager.Amanager.axeChop();
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()

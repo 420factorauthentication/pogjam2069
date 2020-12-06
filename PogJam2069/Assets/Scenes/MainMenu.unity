@@ -1116,6 +1116,8 @@ MonoBehaviour:
   btnClick: {fileID: 8300000, guid: 9f39479988712524d923d4a74eb9b88d, type: 3}
   axeChop1: {fileID: 8300000, guid: 49d8f18a118dcbb4e9f0c5a79c94154a, type: 3}
   treeFall1: {fileID: 8300000, guid: 2cc0799d05750b2489333d00f03dfaf7, type: 3}
+  givingTreeChop1: {fileID: 8300000, guid: be8161b9284bdda4aaf0b2fa526c6fb6, type: 3}
+  givingTreeFall1: {fileID: 8300000, guid: 86f10d5f6d6e09a448ba2f2c06f0b49d, type: 3}
 --- !u!4 &845204912
 Transform:
   m_ObjectHideFlags: 0

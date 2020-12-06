@@ -21,7 +21,7 @@ public class Tree : MonoBehaviour
     public bool isGivingTree = false;
 
     public Animator anim;
-    private int totalChops = 28;
+    private int totalChops = 0;
 
 
     SpriteRenderer sr;
@@ -98,7 +98,12 @@ public class Tree : MonoBehaviour
         currenthits = 0;
 
         //sfx
-        AudioManager.Amanager.treeFall();
+        if (this.isGivingTree) {
+            AudioManager.Amanager.givingTreeFall();
+        }
+        else {
+            AudioManager.Amanager.treeFall();
+        }
         
         // Tree Event 1: Lootbox at 1 Chop
         if (totalChops >= 1 && !didTreeEvent1) { PostTreeEvent1(); }
@@ -128,9 +133,11 @@ public class Tree : MonoBehaviour
             "Gain what's inside?",
             // Choice 1: Open it. Lose the game.
             new UnityAction(delegate () {
+                NpcManager.npcManager.isFrozen = true;
+
                 Surprise surprise2 = new Surprise(
                     "",
-                    "You open the chest. A speaker playing copyrighted " +
+                    "You open the box. A speaker playing copyrighted " +
                         "music is inside. You get DMCA'd by 42069 record " +
                         "labels and lose the game.",
                     30,
@@ -140,7 +147,6 @@ public class Tree : MonoBehaviour
                     "Game Over",
                     "Son of a Twitch!",
                     new UnityAction(delegate () {
-                        // PauseGame();   ADD FUNCTION TO PAUSE ALL GAMEPLAY
                         SceneManager.LoadSceneAsync("MainMenu");
                     })
                 );

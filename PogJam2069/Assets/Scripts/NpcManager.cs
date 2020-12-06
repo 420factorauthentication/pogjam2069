@@ -8,6 +8,7 @@ public class NpcManager : MonoBehaviour
 
     // for player movement im tired so im putting it here
     public bool isMirrored = false;
+    public bool isFrozen = false;
 
     // match npcs to npc houses 1 to one even if they aren't there yet. 
     public List<BaseSlave> allNpcs;

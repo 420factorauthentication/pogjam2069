@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip axeChop1;
     public AudioClip treeFall1;
+    public AudioClip givingTreeChop1;
+    public AudioClip givingTreeFall1;
 
     [HideInInspector]
     public static AudioManager Amanager;
@@ -72,6 +74,18 @@ public class AudioManager : MonoBehaviour
     public void treeFall() {
         sfxSrc2.volume = 0.7f;
         sfxSrc2.clip = treeFall1;
+        sfxSrc2.Play();
+    }
+
+    public void givingTreeChop() {
+        sfxSrc1.volume = 0.5f;
+        sfxSrc1.clip = givingTreeChop1;
+        sfxSrc1.Play();
+    }
+
+    public void givingTreeFall() {
+        sfxSrc2.volume = 0.7f;
+        sfxSrc2.clip = givingTreeFall1;
         sfxSrc2.Play();
     }
 }
