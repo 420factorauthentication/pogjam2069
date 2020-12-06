@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Mine : MonoBehaviour, IBuilding
 {
@@ -16,6 +17,9 @@ public class Mine : MonoBehaviour, IBuilding
     public bool IsBuilt { get { return _isBuilt; } set { _isBuilt = value; } }
     public GameObject canBeBuiltOutline;
     public GameObject builtSprite;
+    public Text notifTextBox;
+
+    private bool canPressF = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +30,13 @@ public class Mine : MonoBehaviour, IBuilding
     // Update is called once per frame
     void Update()
     {
-        
+        if (canPressF)
+        {
+            if (Input.GetKeyDown(KeyCode.F) && WoodManager.Wmanager.Wood >= Cost)
+            {
+                BuildBuilding();
+            }
+        }
     }
 
     public void CheckCanBuild(int currWood)
@@ -35,11 +45,15 @@ public class Mine : MonoBehaviour, IBuilding
         {
             canBeBuiltOutline.SetActive(true);
             builtSprite.SetActive(false);
+            notifTextBox.gameObject.SetActive(true);
+            notifTextBox.text = "Press F to Build";
         }
-        else if (!IsBuilt && currWood < Cost && !canBeBuiltOutline.activeSelf)
+        else if (!IsBuilt && currWood < Cost && canBeBuiltOutline.activeSelf)
         {
             canBeBuiltOutline.SetActive(false);
             builtSprite.SetActive(false);
+            notifTextBox.gameObject.SetActive(false);
+            notifTextBox.text = "";
         }
     }
 
@@ -50,18 +64,25 @@ public class Mine : MonoBehaviour, IBuilding
             WoodManager.Wmanager.PurchaseWithWood(Cost);
             canBeBuiltOutline.SetActive(false);
             builtSprite.SetActive(true);
+            notifTextBox.gameObject.SetActive(false);
+            notifTextBox.text = "";
             IsBuilt = true;
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!IsBuilt && collision.tag == "Player")
+        if (collision.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.F) && WoodManager.Wmanager.Wood >= Cost)
-            {
-                BuildBuilding();
-            }
+            canPressF = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            canPressF = false;
         }
     }
 }

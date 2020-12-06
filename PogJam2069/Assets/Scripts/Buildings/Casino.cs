@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Casino : MonoBehaviour, IBuilding
 {
@@ -15,10 +16,10 @@ public class Casino : MonoBehaviour, IBuilding
     public int Cost { get { return _cost; } set { _cost = value; } }
     public bool IsBuilt { get { return _isBuilt; } set { _isBuilt = value; } }
     public GameObject canBeBuiltOutline;
-    public GameObject builtObject;
-    public List<Sprite> UpgradeSprites;
-    public int buildingLevel;
+    public GameObject builtSprite;
+    public Text notifTextBox;
 
+    private bool canPressF = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,13 @@ public class Casino : MonoBehaviour, IBuilding
     // Update is called once per frame
     void Update()
     {
-        
+        if (canPressF)
+        {
+            if (Input.GetKeyDown(KeyCode.F) && WoodManager.Wmanager.Wood >= Cost)
+            {
+                BuildBuilding();
+            }
+        }
     }
 
     public void CheckCanBuild(int currWood)
@@ -37,12 +44,16 @@ public class Casino : MonoBehaviour, IBuilding
         if (!IsBuilt && currWood >= Cost)
         {
             canBeBuiltOutline.SetActive(true);
-            builtObject.SetActive(false);
+            builtSprite.SetActive(false);
+            notifTextBox.gameObject.SetActive(true);
+            notifTextBox.text = "Press F to Build";
         }
-        else if (!IsBuilt && currWood < Cost && !canBeBuiltOutline.activeSelf)
+        else if (!IsBuilt && currWood < Cost && canBeBuiltOutline.activeSelf)
         {
             canBeBuiltOutline.SetActive(false);
-            builtObject.SetActive(false);
+            builtSprite.SetActive(false);
+            notifTextBox.gameObject.SetActive(false);
+            notifTextBox.text = "";
         }
     }
 
@@ -52,19 +63,26 @@ public class Casino : MonoBehaviour, IBuilding
         {
             WoodManager.Wmanager.PurchaseWithWood(Cost);
             canBeBuiltOutline.SetActive(false);
-            builtObject.SetActive(true);
+            builtSprite.SetActive(true);
+            notifTextBox.gameObject.SetActive(false);
+            notifTextBox.text = "";
             IsBuilt = true;
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!IsBuilt && collision.tag == "Player")
+        if (collision.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.F) && WoodManager.Wmanager.Wood >= Cost)
-            {
-                BuildBuilding();
-            }
+            canPressF = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            canPressF = false;
         }
     }
 }
