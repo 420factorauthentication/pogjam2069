@@ -80,7 +80,9 @@ public class Tree : MonoBehaviour
         treeisDead = true;
         currenthits = 0;
         
-        // Tree Event 1: Lootbox at 1 Chop
+        /////////////////////////////////////
+        // Tree Event 1: Lootbox at 1 Chop //
+        /////////////////////////////////////
         if (totalChops >= 1 && !didTreeEvent1)
         {
             didTreeEvent1 = true;
@@ -137,7 +139,9 @@ public class Tree : MonoBehaviour
             SurpriseManager.Smanager.PostSurprise(surprise1, false);
         }
 
-        // Tree Event 2: Better Tree At 30 Chops
+        ///////////////////////////////////////////
+        // Tree Event 2: Better Tree At 30 Chops //
+        ///////////////////////////////////////////
         if (totalChops >= 30 && !didTreeEvent2)
         {
             didTreeEvent2 = true;
