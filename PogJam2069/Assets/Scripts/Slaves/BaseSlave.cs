@@ -315,7 +315,7 @@ public class BaseSlave : MonoBehaviour
     /////////////////////
     private void talkFisherNeedHouse() {
         Surprise surprise1 = new Surprise(
-            "Fisherwoman Mann",
+            "FISHERWOMAN MANN",
             "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
                 "women, man.\n" +
                 "If you get me a house, I might be able to join your village.",
@@ -332,7 +332,7 @@ public class BaseSlave : MonoBehaviour
 
     private void talkFisherHire() {
         Surprise surprise1 = new Surprise(
-            "Fisherwoman Mann",
+            "FISHERWOMAN MANN",
             "Nice house! I'll get to work.",
             30,
             15, //Player
@@ -347,7 +347,7 @@ public class BaseSlave : MonoBehaviour
 
     private void talkFisherWorking() {
         Surprise surprise1 = new Surprise(
-            "Fisherwoman Mann",
+            "FISHERWOMAN MANN",
             "How's it going, boss?",
             30,
             15, //Player
