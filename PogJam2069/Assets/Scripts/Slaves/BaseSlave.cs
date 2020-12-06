@@ -112,8 +112,8 @@ public class BaseSlave : MonoBehaviour
             isMovingToDepot = false;
             Deposit();
             // change destination
-            targetOffset = new Vector2(Random.value, Random.value).normalized * randRadiusAroundPoint;
-            depotOffset = new Vector2(Random.value, Random.value).normalized * randRadiusAroundDepot;
+            targetOffset = new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f)).normalized * randRadiusAroundPoint;
+            depotOffset = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * randRadiusAroundDepot;
         }
         else
         {

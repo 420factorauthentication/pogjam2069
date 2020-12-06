@@ -8,6 +8,7 @@ TagManager:
   - CloudDestroy
   - Npc
   - Guard
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Axehittable
   - Wall
   - Npc
-  - 
+  - Bullet
   - 
   - 
   - 

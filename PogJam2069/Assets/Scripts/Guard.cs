@@ -3,20 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Guard : MonoBehaviour
 {
-    public int currHealth = 3;
-    public int maxHealth = 3;
-    public float searchRange = 5f;
-    public bool isActive = true;
+    public float shootRate = 3f;
+    public Transform gun;
+    public bool canShoot = false;
+    public float searchRange = 10f;
+    public int woodCostToHire = 40;
+    public Transform stationedPoint;
+    public bool isMovingToPoint = false;
     public float speed = 1.5f;
-    public bool isUnderAttack = false;
-    public float closeEnough = 1f;
-    public float refreshrate = 0.5f;
 
-    [SerializeField]
-    private GameObject target;
-    private Vector3 actualTarget;
+    private float timeSinceLastShoot = 0f;
+    private bool canPressF = false;
 
     [SerializeField]
     private Transform _currMoveTarget;
@@ -32,7 +31,6 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currHealth = maxHealth;
         seeker = GetComponent<Seeker>();
         rotater = GetComponentInChildren<RotateToTree>();
     }
@@ -41,60 +39,59 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         float delta = Time.deltaTime;
-        if(isActive)
+        if (canShoot)
         {
+            // check for enemy. If there is one, then shoot
             Collider2D[] hitobjects = Physics2D.OverlapCircleAll(transform.position, searchRange);
-
+            bool found = false;
             foreach (Collider2D thingsHit in hitobjects)
             {
-                if(isUnderAttack && thingsHit.tag == "Guard")
+                if (thingsHit.tag == "Enemy")
                 {
-                    target = thingsHit.gameObject;
-                    rotater.tree = target.transform;
-                    rotater.pointToTree = false;
-                }
-                else if(!isUnderAttack && thingsHit.tag == "Npc")
-                {
-                    target = thingsHit.gameObject;
-                    rotater.tree = target.transform;
-                    rotater.pointToTree = false;
+                    rotater.tree = thingsHit.transform;
+                    found = true;
                 }
             }
 
-            if(target != null)
+            rotater.pointToTree = found;
+
+            if (found)
             {
-                // randomize movement if we are close to target to make it look cool
-                if (Mathf.Abs(Vector2.Distance(target.transform.position, transform.position)) < closeEnough)
+                if (timeSinceLastShoot > shootRate)
                 {
-                    if(timeSinceLastTask > refreshrate)
-                    {
-                        Vector3 targetOffset = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * closeEnough;
-                        actualTarget = target.transform.position + targetOffset;
-                        timeSinceLastTask = 0f;
-                    }
+                    gun.GetComponent<Gun>().Shoot();
+                    timeSinceLastShoot = 0f;
+                }
+                timeSinceLastShoot += delta;
+            }
+        }
+
+        if(canPressF)
+        {
+            if(Input.GetKeyUp(KeyCode.F))
+            {
+                //hire the guy
+                if (WoodManager.Wmanager.Wood >= woodCostToHire)
+                {
+                    canShoot = true;
+                    isMovingToPoint = true;
                 }
                 else
                 {
-                    actualTarget = target.transform.position;
+                    Debug.Log("Not enough money to hire me pleb");
                 }
-                Move(delta);
             }
         }
-        else
-        {
-            target = null;
-        }
-        timeSinceLastTask += delta;
-    }
 
-    public void TakeDamage(int damage)
-    {
-        currHealth -= damage;
-        isUnderAttack = true;
-        if(currHealth <= 0)
+        if (isMovingToPoint && Mathf.Abs(Vector2.Distance(stationedPoint.position, transform.position)) < 0.1f)
         {
-            // time to die
-            Destroy(gameObject);
+            isMovingToPoint = false;
+            canShoot = true;
+        }
+
+        if(isMovingToPoint)
+        {
+            Move(delta);
         }
     }
 
@@ -103,6 +100,23 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, searchRange);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Player")
+        {
+            canPressF = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            canPressF = false;
+        }
+    }
+
 
     private void OnPathComplete(Path p)
     {
@@ -126,7 +140,7 @@ public class Enemy : MonoBehaviour
         {
             // Start a new path to the targetPosition, call the the OnPathComplete function
             // when the path has been calculated (which may take a few frames depending on the complexity)
-            seeker.StartPath(transform.position, actualTarget, OnPathComplete);
+            seeker.StartPath(transform.position, stationedPoint.transform.position, OnPathComplete);
         }
 
         if (currentPath == null)
