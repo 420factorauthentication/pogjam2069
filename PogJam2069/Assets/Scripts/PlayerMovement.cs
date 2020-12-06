@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             //sr.flipX = false;
             WeaponSprite.flipY = false;
             facingRight = true;
-
+            Fabove.transform.localScale = new Vector3(1, Fabove.transform.localScale.y, Fabove.transform.localScale.z);
         }
         else if (delta.x < 0 && facingRight)
         { // mouse is on left side
@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             //sr.flipX = true;
             facingRight = false;
 
-            Fabove.transform.localScale = new Vector3(Fabove.transform.localScale.x * -1, Fabove.transform.localScale.y, Fabove.transform.localScale.z);
+            Fabove.transform.localScale = new Vector3(-1, Fabove.transform.localScale.y, Fabove.transform.localScale.z);
         }
     }
 }

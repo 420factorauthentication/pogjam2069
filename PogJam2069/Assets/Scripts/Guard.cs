@@ -236,7 +236,7 @@ public class Guard : MonoBehaviour
             "FISHERWOMAN MANN",
             "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
                 "women, man.\n" +
-                "If you pay me 40 wood, I might be able to help with your bandit problem.",
+                "If you pay me 15 wood, I might be able to help with your bandit problem.",
             30,
             15, //Player
             false,

@@ -219,7 +219,7 @@ public class Tree : MonoBehaviour
             "Learn more about the Tree Mystery?",
             // Choice 2: Switch to 2D. Movement controls are now mirrored.
             new UnityAction(delegate () {
-                NpcManager.npcManager.MirrorMovement();
+                //NpcManager.npcManager.MirrorMovement();
 
                 Surprise surprise6 = new Surprise(
                     "",

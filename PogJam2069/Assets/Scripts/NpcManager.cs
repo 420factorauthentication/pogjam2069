@@ -15,6 +15,8 @@ public class NpcManager : MonoBehaviour
     public BaseSlave npc2;
     public BaseSlave npc3;
     public BaseSlave npc4;
+    public BaseSlave npc5;
+    public BaseSlave npc6;
 
     public BaseSlave robot1;
     public BaseSlave robot2;
@@ -44,10 +46,12 @@ public class NpcManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(allNpcs.Count >=2 && !npc3.gameObject.activeSelf)
+        if(allNpcHouses.Count >=1 && !npc3.gameObject.activeSelf)
         {
             npc3.gameObject.SetActive(true);
             npc4.gameObject.SetActive(true);
+            npc5.gameObject.SetActive(true);
+            npc6.gameObject.SetActive(true);
         }
         if(allNpcHouses.Count >= 1 && !unlockedBlackandMine)
         {

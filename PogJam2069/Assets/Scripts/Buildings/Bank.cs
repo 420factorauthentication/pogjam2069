@@ -97,13 +97,13 @@ public class Bank : MonoBehaviour, IBuilding
         {
             if (timeSinceLast > rate && gain != 0)
             {
-                float plusNeg = Random.Range(-0f, 1f) < 0.5 ? -1 : 1;
-                float rate = Random.Range(0.01f, 0.20f);
+                float plusNeg = 1;
+                float rate = Random.Range(0.01f, 0.50f);
 
                 gain += (int)(gain * rate * plusNeg);
                 BuildingUiManager.buildingUi.BankUi.GetComponent<BankUI>().UpdateGain(gain);
 
-                gainSnippet.text = (gain * rate * plusNeg) > 0 ? "+" + (gain * rate * plusNeg).ToString() : (gain * rate * plusNeg).ToString();
+                gainSnippet.text = (gain * rate * plusNeg) > 0 ? "+" + ((int) (gain * rate * plusNeg)).ToString() : (gain * rate * plusNeg).ToString();
                 anim.SetTrigger("show");
                 timeSinceLast = 0f;
             }

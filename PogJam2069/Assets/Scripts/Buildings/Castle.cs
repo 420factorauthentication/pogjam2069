@@ -65,7 +65,7 @@ public class Castle : MonoBehaviour, IBuilding
         {
             canPressF = true;
             FabovePlayer.SetActive(true);
-            FabovePlayer.GetComponent<Text>().text = "700 wood To Buy";
+            //FabovePlayer.GetComponent<Text>().text = "700 wood To Buy";
         }
     }
 
@@ -74,7 +74,7 @@ public class Castle : MonoBehaviour, IBuilding
         if (collision.tag == "Player")
         {
             canPressF = false;
-            FabovePlayer.GetComponent<Text>().text = "(Press F)";
+            //FabovePlayer.GetComponent<Text>().text = "(Press F)";
             FabovePlayer.SetActive(false);
         }
     }
