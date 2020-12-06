@@ -278,7 +278,7 @@ public class BaseSlave : MonoBehaviour
         {
             CanBeHired = true;
         }
-        if(collision.tag == "Enemy")
+        if(collision.tag == "Enemy" && !mineSlave)
         {
             Instantiate(oof);
             isMovingToDepot = false;
@@ -291,7 +291,7 @@ public class BaseSlave : MonoBehaviour
         {
             CanBeHired = false;
         }
-        if (collision.tag == "Enemy")
+        if (collision.tag == "Enemy" && !mineSlave)
         {
             Instantiate(oof);
             isMovingToDepot = false;

@@ -14,6 +14,9 @@ public class Guard : MonoBehaviour
     public bool isMovingToPoint = false;
     public float speed = 1.5f;
 
+    public static int numberShotsFired = 0;
+    public static bool didbankevennt = false;
+
     private float timeSinceLastShoot = 0f;
     private bool canPressF = false;
 
@@ -61,8 +64,15 @@ public class Guard : MonoBehaviour
                 {
                     gun.GetComponent<Gun>().Shoot();
                     timeSinceLastShoot = 0f;
+                    numberShotsFired = numberShotsFired + 1;
                 }
                 timeSinceLastShoot += delta;
+            }
+
+            if(numberShotsFired > 20 && !didbankevennt)
+            {
+                BankEvent();
+                didbankevennt = true;
             }
         }
 
@@ -227,6 +237,24 @@ public class Guard : MonoBehaviour
             false,
 
             "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void BankEvent()
+    {
+        Bank bank = FindObjectOfType<Bank>();
+        bank.canBeBuilt = true;
+        Surprise surprise1 = new Surprise(
+            "A Change of Heart",
+            "Another great day of watching your guards beat up bandits, or so it seems. One of the bandits suprised you today by asking to work for you. He's always loved finance and had to secretly read accounting textbooks by flashlight when he was younger. It would be great if there were a bank he could work in.",
+            30,
+            22, //bandit
+            false,
+
+            "I'll see what I can do.",
             "",
             null
         );
