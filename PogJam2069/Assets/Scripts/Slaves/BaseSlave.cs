@@ -41,6 +41,7 @@ public class BaseSlave : MonoBehaviour
     private Vector3 depotOffset = new Vector2();
     private RotateToTree rotater;
     private bool CanBeHired = false;
+    private bool IsHired = false;
     [SerializeField]
     private Transform _currMoveTarget;
     private float timeSinceLastTask = 0f;
@@ -127,26 +128,32 @@ public class BaseSlave : MonoBehaviour
 
         if(CanBeHired)
         {
-            if(Input.GetKey(KeyCode.F))
+            if(Input.GetKeyDown(KeyCode.F))
             {
                 if (mineSlave)
                 {
                     GameObject mine = WoodManager.Wmanager.buildings.Find(x => x.GetComponent<Mine>());
+                   // GameObject mine = GameObject.Find("Mine");
                     if (mine != null && mine.GetComponent<Mine>().IsBuilt)
                     {
                         if (NpcManager.npcManager.AddNpc(this))
                         {
                             canDoTask = true;
-                            Debug.Log("Sure I'll come work");
+                            IsHired = true;
+                            talkMinerHire();
+                        }
+                        else if (!IsHired)
+                        {
+                            talkMinerNeedHouse();
                         }
                         else
                         {
-                            Debug.Log("I can't work in your village yet I need a house");
+                            talkMinerWorking();
                         }
                     }
                     else
                     {
-                        Debug.Log("I can't work in your village yet I need a mine");
+                        talkMinerNeedMine();
                     }
                 }
                 else if (!mineSlave)
@@ -154,11 +161,16 @@ public class BaseSlave : MonoBehaviour
                     if (NpcManager.npcManager.AddNpc(this))
                     {
                         canDoTask = true;
-                        Debug.Log("Sure I'll come work");
+                        IsHired = true;
+                        talkFisherHire();
+                    }
+                    else if (!IsHired)
+                    {
+                        talkFisherNeedHouse();
                     }
                     else
                     {
-                        Debug.Log("I can't work in your village yet I need a house");
+                        talkFisherWorking();
                     }
                 }
             }
@@ -273,5 +285,119 @@ public class BaseSlave : MonoBehaviour
         {
             CanBeHired = false;
         }
+    }
+
+
+
+    /////////////////////
+    // EVENT DELEGATES //
+    /////////////////////
+    private void talkFisherNeedHouse() {
+        Surprise surprise1 = new Surprise(
+            "Fisherwoman Mann",
+            "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
+                "women, man.\n" +
+                "If you get me a house, I might be able to join your village.",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void talkFisherHire() {
+        Surprise surprise1 = new Surprise(
+            "Fisherwoman Mann",
+            "Nice house! I'll get to work.",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void talkFisherWorking() {
+        Surprise surprise1 = new Surprise(
+            "Fisherwoman Mann",
+            "How's it going, boss?",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void talkMinerNeedHouse() {
+        Surprise surprise1 = new Surprise(
+            "Pete Dophile",
+            "I`m good with miners.\n" +
+                "If you get me a house, I might be able to join your village.",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void talkMinerNeedMine() {
+        Surprise surprise1 = new Surprise(
+            "Pete Dophile",
+            "I`m good with miners.\n" +
+                "If you open the mine, I might be able to join your village.",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void talkMinerHire() {
+        Surprise surprise1 = new Surprise(
+            "Pete Dophile",
+            "Nice house! I'll get to work.",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void talkMinerWorking() {
+        Surprise surprise1 = new Surprise(
+            "Pete Dophile",
+            "How's it going, boss?",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
     }
 }
