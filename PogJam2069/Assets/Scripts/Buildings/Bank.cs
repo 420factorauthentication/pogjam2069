@@ -28,6 +28,7 @@ public class Bank : MonoBehaviour, IBuilding
     public Animator anim;
     public Text gainSnippet;
     public bool canBeBuilt = false;
+    public GameObject FabovePlayer;
 
     private bool wasPinged = false;
 
@@ -161,6 +162,10 @@ public class Bank : MonoBehaviour, IBuilding
         if (collision.tag == "Player")
         {
             canPressF = true;
+            if(IsBuilt)
+            {
+                FabovePlayer.SetActive(true);
+            }
         }
     }
 
@@ -169,6 +174,7 @@ public class Bank : MonoBehaviour, IBuilding
         if (collision.tag == "Player")
         {
             canPressF = false;
+            FabovePlayer.SetActive(false);
         }
     }
 

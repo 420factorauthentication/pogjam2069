@@ -37,6 +37,7 @@ public class BaseSlave : MonoBehaviour
     public Animator anim;
     public bool mineSlave = false;
     public GameObject oof;
+    public GameObject FabovePlayer;
 
     private Vector3 targetOffset = new Vector2();
     private Vector3 depotOffset = new Vector2();
@@ -278,10 +279,14 @@ public class BaseSlave : MonoBehaviour
         if (collision.tag == "Player")
         {
             CanBeHired = true;
+            FabovePlayer.SetActive(true);
         }
         if(collision.tag == "Enemy" && !mineSlave)
         {
-            Instantiate(oof);
+            if (!isMoving && timeSinceLastTask > taskRate)
+            {
+                Instantiate(oof, transform.position, Quaternion.identity);
+            }
             isMovingToDepot = false;
         }
     }
@@ -291,10 +296,14 @@ public class BaseSlave : MonoBehaviour
         if(collision.tag == "Player")
         {
             CanBeHired = false;
+            FabovePlayer.SetActive(false);
         }
         if (collision.tag == "Enemy" && !mineSlave)
         {
-            Instantiate(oof);
+            if (!isMoving && timeSinceLastTask > taskRate)
+            {
+                Instantiate(oof, transform.position, Quaternion.identity);
+            }
             isMovingToDepot = false;
         }
     }

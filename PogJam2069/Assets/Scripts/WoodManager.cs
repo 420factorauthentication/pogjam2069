@@ -51,17 +51,15 @@ public class WoodManager : MonoBehaviour
         Debug.Log("Wood: " + Wood.ToString());
 
         // Wood Event 1: First worker at 20 wood + stockpile building
-        if (Wood >= 20 && !didStockpileEvent) {
+        if (Wood >= 7 && !didStockpileEvent) {
             if(GameObject.Find("Storage").GetComponent<Storage>().IsBuilt) {
                 postStockpileEvent();
             }
         }
 
         // Wood Event 2: Unlock robots at 200 wood + mine building
-        if(WoodFromMine >= 200 && !didMineEvent) {
-            if(GameObject.Find("Mine").GetComponent<Mine>().IsBuilt) {
-                postMineEvent();
-            }
+        if(WoodFromMine >= 100 && !didMineEvent) {
+            postMineEvent();
         }
 
         // Wood Event 2: Unlock robots at 200 wood + mine building
