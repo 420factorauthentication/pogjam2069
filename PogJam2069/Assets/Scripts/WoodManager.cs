@@ -51,14 +51,14 @@ public class WoodManager : MonoBehaviour
 
         // Wood Event 1: First worker at 20 wood + stockpile building
         if (Wood >= 20 && !didStockpileEvent) {
-            if(buildings.Find(x => x.GetComponent<Storage>() != null) != null) {
+            if(GameObject.Find("Storage").GetComponent<Storage>().IsBuilt) {
                 postStockpileEvent();
             }
         }
 
         // Wood Event 2: Unlock robots at 200 wood + mine building
         if(Wood > 200 && !didMineEvent) {
-            if(buildings.Find(x => x.GetComponent<Mine>() != null) != null) {
+            if(GameObject.Find("Mine").GetComponent<Mine>().IsBuilt) {
                 postMineEvent();
             }
         }
@@ -158,7 +158,7 @@ public class WoodManager : MonoBehaviour
                 "out there is willing to buy some. What surprises does the free " +
                 "market have in store?",
             30,
-            17, //Tree1_Cut
+            3, //Blacksmith
             true,
 
             "",
@@ -177,7 +177,7 @@ public class WoodManager : MonoBehaviour
                         "make more money working for you, and he mugs you for " +
                         "a job.",
                     24,
-                    0, //Fence
+                    15, //Player
                     false,
                     "Continue",
                     "+1 Worker",
@@ -196,7 +196,7 @@ public class WoodManager : MonoBehaviour
                         "stock price to skyrocket. Your stock pile becomes " +
                         "worthless, and your credit score plummets.",
                     30,
-                    18, //WoodPile
+                    1, //Line1
                     false,
 
                     "Oof",

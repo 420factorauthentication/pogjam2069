@@ -13,11 +13,16 @@ public class Tree : MonoBehaviour
     public float treeRespawnTimer;
     private float timer;
     public bool treeisDead;
-    public Sprite TreeAlive;
+    public GameObject TreeTop;
+    public GameObject TreeBottom;
     public Sprite TreeDead;
     private bool didTreeEvent1 = false;
     private bool didTreeEvent2 = false;
+
+    public Animator anim;
     private int totalChops = 0;
+
+
     SpriteRenderer sr;
     // Start is called before the first frame update
     void Start()
@@ -39,6 +44,8 @@ public class Tree : MonoBehaviour
         if(treeisDead == true)
         {
             sr.sprite = TreeDead;
+            TreeTop.SetActive(false);
+            TreeBottom.SetActive(false);
             timer += Time.deltaTime;
         }
 
@@ -46,7 +53,9 @@ public class Tree : MonoBehaviour
         if(timer >= treeRespawnTimer)
         {
             timer = 0;
-            sr.sprite = TreeAlive;
+            sr.sprite = null;
+            TreeBottom.SetActive(true);
+            TreeTop.SetActive(true);
             treeisDead = false;
         }
 
@@ -62,6 +71,7 @@ public class Tree : MonoBehaviour
         if (treeisDead == false)
         {
             currenthits += 1;
+            anim.SetTrigger("Hit");
         }
     }
 
