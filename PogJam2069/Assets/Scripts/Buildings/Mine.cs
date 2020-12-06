@@ -19,6 +19,7 @@ public class Mine : MonoBehaviour, IBuilding
     public GameObject builtSprite;
     public Text notifTextBox;
     public int woodFerried = 0;
+    public bool canBebuilt = false;
 
     private bool canPressF = false;
 
@@ -49,10 +50,10 @@ public class Mine : MonoBehaviour, IBuilding
             notifTextBox.text = Cost.ToString() + " Wood (F)";
 
         }
-        else if (!IsBuilt && currWood < Cost)
+        else if (!IsBuilt && canBebuilt)
         {
-
-
+            BuildingCanvas.SetActive(true);
+            notifTextBox.text = Cost.ToString() + " Wood (F)";
         }
     }
 

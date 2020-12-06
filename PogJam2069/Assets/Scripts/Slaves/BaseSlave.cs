@@ -36,6 +36,7 @@ public class BaseSlave : MonoBehaviour
     public Transform currDepotTarget;
     public Animator anim;
     public bool mineSlave = false;
+    public GameObject oof;
 
     private Vector3 targetOffset = new Vector2();
     private Vector3 depotOffset = new Vector2();
@@ -136,7 +137,7 @@ public class BaseSlave : MonoBehaviour
                    // GameObject mine = GameObject.Find("Mine");
                     if (mine != null && mine.GetComponent<Mine>().IsBuilt)
                     {
-                        if (NpcManager.npcManager.AddNpc(this))
+                        if (NpcManager.npcManager.AddNpc(this, mineCheck:true))
                         {
                             canDoTask = true;
                             IsHired = true;
@@ -279,6 +280,7 @@ public class BaseSlave : MonoBehaviour
         }
         if(collision.tag == "Enemy")
         {
+            Instantiate(oof);
             isMovingToDepot = false;
         }
     }
@@ -291,6 +293,7 @@ public class BaseSlave : MonoBehaviour
         }
         if (collision.tag == "Enemy")
         {
+            Instantiate(oof);
             isMovingToDepot = false;
         }
     }
