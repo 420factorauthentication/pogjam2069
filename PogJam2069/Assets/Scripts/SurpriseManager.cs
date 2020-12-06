@@ -58,9 +58,10 @@ public class SurpriseManager : MonoBehaviour {
         SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
 
         // Configure properties
-        /* title */ SurpriseCanvas.Scanvas.transform.GetChild(1).gameObject.GetComponent<Text>().text = s.title;
-        /* desc  */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = s.desc;
-        /* img   */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(1).gameObject.GetComponent<Image>().sprite = this.images[s.img];
+        /* title        */ SurpriseCanvas.Scanvas.transform.GetChild(1).gameObject.GetComponent<Text>().text = s.title;
+        /* desc         */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = s.desc;
+        /* descFontSize */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().fontSize = s.descFontSize;
+        /* img          */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(1).gameObject.GetComponent<Image>().sprite = this.images[s.img];
         
         /* choice */
         if (s.choice) {
@@ -109,10 +110,11 @@ public class SurpriseManager : MonoBehaviour {
 // TODO: implement choice resource changes //
 /////////////////////////////////////////////
 public class Surprise {
-    public string title; // Title text of prompt.
-    public string desc;  // Description text of prompt.
-    public int img;      // Description image. Index into list.
-    public bool choice;  // Whether or not this surprise has choices.
+    public string title;     // Title text of prompt.
+    public string desc;      // Description text of prompt.
+    public int descFontSize; // Font size for description text.
+    public int img;          // Description image. Index into list.
+    public bool choice;      // Whether or not this surprise has choices.
 
     public string noTitle;     // Button text for no-choice surprises.
     public string noDesc;      // Description text for no-choice surprises.
@@ -130,10 +132,11 @@ public class Surprise {
     /////////////////
     // Constructor //
     /////////////////
-    public Surprise(string title = "Huey Dies!",
-                    string desc  = "Huey died. Should we take his dog in, or sell it for wood?",
-                    int img      = 0,
-                    bool choice  = false,
+    public Surprise(string title     = "Huey Dies!",
+                    string desc      = "Huey died. Should we take his dog in, or sell it for wood?",
+                    int descFontSize = 30,
+                    int img          = 0,
+                    bool choice      = false,
 
                     string noTitle     = "Wtf",
                     string noDesc      = "Haha just kidding. You have no choice. Get rekt scrub.",
@@ -146,21 +149,22 @@ public class Surprise {
                     string c2Title     = "Sell The Dog",
                     string c2Desc      = "+1 Wood",
                     UnityAction c2Func = null) {
-        this.title = title;
-        this.desc  = desc;
-        this.img   = img;
-        this.choice  = choice;
+        this.title        = title;
+        this.desc         = desc;
+        this.descFontSize = descFontSize;
+        this.img          = img;
+        this.choice       = choice;
         
-        this.noTitle   = noTitle;
-        this.noDesc    = noDesc;
-        this.noFunc = noFunc;
+        this.noTitle = noTitle;
+        this.noDesc  = noDesc;
+        this.noFunc  = noFunc;
 
-        this.c1Title   = c1Title;
-        this.c1Desc    = c1Desc;
-        this.c1Func = c1Func;
+        this.c1Title = c1Title;
+        this.c1Desc  = c1Desc;
+        this.c1Func  = c1Func;
 
-        this.c2Title   = c2Title;
-        this.c2Desc    = c2Desc;
-        this.c2Func = c2Func;
+        this.c2Title = c2Title;
+        this.c2Desc  = c2Desc;
+        this.c2Func  = c2Func;
     }
 }
