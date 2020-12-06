@@ -98,8 +98,8 @@ public class BlackSmith : MonoBehaviour, IBuilding
     {
         didGuardEvet = true;
         guard1.gameObject.SetActive(true);
-        spawn1.canSpawn = true;
-        spawn2.canSpawn = true;
+        //spawn1.canSpawn = true;
+        //spawn2.canSpawn = true;
         Surprise surprise1 = new Surprise(
             "No Swiping!",
             "There have been some recent cases of bandits appearing and stopping your wood productions! Thankfully, you can hire some guards in front of the blacksmith to help you out.",
