@@ -18,9 +18,10 @@ public class Tree : MonoBehaviour
     public Sprite TreeDead;
     private bool didTreeEvent1 = false;
     private bool didTreeEvent2 = false;
+    public bool isGivingTree = false;
 
     public Animator anim;
-    private int totalChops = 0;
+    private int totalChops = 28;
 
 
     SpriteRenderer sr;
@@ -86,7 +87,13 @@ public class Tree : MonoBehaviour
         Debug.Log("Chops: " + totalChops);
 
         //give wood
-        WoodManager.Wmanager.addWood(woodToGive);
+        if (isGivingTree) {
+            WoodManager.Wmanager.addWood(woodToGive + 1);
+        }
+        else {
+            WoodManager.Wmanager.addWood(woodToGive);
+        }
+        
         treeisDead = true;
         currenthits = 0;
 
@@ -182,16 +189,18 @@ public class Tree : MonoBehaviour
             "Learn more about the Tree Mystery?",
             // Choice 1: Switch to Tree-D. Reveal Giving Tree.
             new UnityAction(delegate () {
+                GameObject.Find("Tree1").GetComponent<Tree>().transformIntoGivingTree();
+
                 Surprise surprise5 = new Surprise(
                     "",
-                    "You can see more trees in this new dimension.",
+                    "Trees look different in this dimension.",
                     30,
                     11, //Flower1
                     false,
 
                     "Continue",
-                    "+1 Tree Mystery Progress",
-                    null //new UnityAction(delegate () { spawnGivingTree(); })    ADD FUNCTION TO SPAWN GIVING TREE
+                    "+1 Wood Per Tree",
+                    null
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise5, true);
             }),
@@ -200,6 +209,8 @@ public class Tree : MonoBehaviour
             "Learn more about the Tree Mystery?",
             // Choice 2: Switch to 2D. Movement controls are now mirrored.
             new UnityAction(delegate () {
+                NpcManager.npcManager.MirrorMovement();
+
                 Surprise surprise6 = new Surprise(
                     "",
                     "You find out it's always opposite day in this dimension. " +
@@ -209,14 +220,23 @@ public class Tree : MonoBehaviour
                     false,
 
                     "eunitnoC",
-                    "ssergorP yretsyM eerT 0+",
-                    new UnityAction(delegate () {
-                        NpcManager.npcManager.MirrorMovement();
-                    })
+                    "",  
+                    null
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise6, true);
             })
         );
         SurpriseManager.Smanager.PostSurprise(surprise4, false);
+    }
+
+
+
+
+    ///////////////////////////
+    // Turn into giving tree //
+    ///////////////////////////
+    public void transformIntoGivingTree() {
+        isGivingTree = true;
+        this.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
     }
 }
