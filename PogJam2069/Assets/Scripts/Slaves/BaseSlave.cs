@@ -35,6 +35,7 @@ public class BaseSlave : MonoBehaviour
     }
     public Transform currDepotTarget;
     public Animator anim;
+    public bool mineSlave = false;
 
     private Vector3 targetOffset = new Vector2();
     private Vector3 depotOffset = new Vector2();
@@ -77,7 +78,7 @@ public class BaseSlave : MonoBehaviour
             switch (currTask)
             {
                 case SlaveTask.CutTree:
-                    if (treeIsThere)
+                    if (treeIsThere || mineSlave)
                     {
                         anim.SetTrigger("Attack");
                         counter++;
@@ -128,14 +129,37 @@ public class BaseSlave : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.F))
             {
-                if (NpcManager.npcManager.AddNpc(this))
+                if (mineSlave)
                 {
-                    canDoTask = true;
-                    Debug.Log("Sure I'll come work");
+                    GameObject mine = WoodManager.Wmanager.buildings.Find(x => x.GetComponent<Mine>());
+                    if (mine != null && mine.GetComponent<Mine>().IsBuilt)
+                    {
+                        if (NpcManager.npcManager.AddNpc(this))
+                        {
+                            canDoTask = true;
+                            Debug.Log("Sure I'll come work");
+                        }
+                        else
+                        {
+                            Debug.Log("I can't work in your village yet I need a house");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("I can't work in your village yet I need a mine");
+                    }
                 }
-                else
+                else if (!mineSlave)
                 {
-                    Debug.Log("I can't work in your village yet I need a house");
+                    if (NpcManager.npcManager.AddNpc(this))
+                    {
+                        canDoTask = true;
+                        Debug.Log("Sure I'll come work");
+                    }
+                    else
+                    {
+                        Debug.Log("I can't work in your village yet I need a house");
+                    }
                 }
             }
         }
@@ -149,7 +173,7 @@ public class BaseSlave : MonoBehaviour
         switch (currTask)
         {
             case SlaveTask.CutTree:
-                WoodManager.Wmanager.addWood(woodGainPerTask);
+                WoodManager.Wmanager.addWood(woodGainPerTask, isFromMine: mineSlave, isFromTree:!mineSlave);
                 rotater.pointToTree = true;
                 break;
             case SlaveTask.CommitTaxFraud:

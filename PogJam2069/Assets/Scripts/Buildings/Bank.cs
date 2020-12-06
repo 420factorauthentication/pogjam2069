@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Mine : MonoBehaviour, IBuilding
+public class Bank : MonoBehaviour, IBuilding
 {
     [SerializeField]
     private string _buildingName;
@@ -15,7 +15,7 @@ public class Mine : MonoBehaviour, IBuilding
     public string BuildingName { get { return _buildingName; } set { _buildingName = value; } }
     public int Cost { get { return _cost; } set { _cost = value; } }
     public bool IsBuilt { get { return _isBuilt; } set { _isBuilt = value; } }
-    public GameObject BuildingCanvas;
+    public GameObject canBeBuiltOutline;
     public GameObject builtSprite;
     public Text notifTextBox;
     public int woodFerried = 0;
@@ -25,8 +25,7 @@ public class Mine : MonoBehaviour, IBuilding
     // Start is called before the first frame update
     void Start()
     {
-        notifTextBox.text = Cost.ToString() + "Wood";
-        BuildingCanvas.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -45,14 +44,17 @@ public class Mine : MonoBehaviour, IBuilding
     {
         if (!IsBuilt && currWood >= Cost)
         {
-            BuildingCanvas.SetActive(true);
-            notifTextBox.text = Cost.ToString() + " Wood (F)";
-
+            canBeBuiltOutline.SetActive(true);
+            builtSprite.SetActive(false);
+            notifTextBox.gameObject.SetActive(true);
+            notifTextBox.text = "Press F to Build";
         }
-        else if (!IsBuilt && currWood < Cost)
+        else if (!IsBuilt && currWood < Cost && canBeBuiltOutline.activeSelf)
         {
-
-
+            canBeBuiltOutline.SetActive(false);
+            builtSprite.SetActive(false);
+            notifTextBox.gameObject.SetActive(false);
+            notifTextBox.text = "";
         }
     }
 
@@ -61,9 +63,10 @@ public class Mine : MonoBehaviour, IBuilding
         if (!IsBuilt && WoodManager.Wmanager.Wood >= Cost)
         {
             WoodManager.Wmanager.PurchaseWithWood(Cost);
+            canBeBuiltOutline.SetActive(false);
             builtSprite.SetActive(true);
-            BuildingCanvas.SetActive(false);
-
+            notifTextBox.gameObject.SetActive(false);
+            notifTextBox.text = "";
             IsBuilt = true;
         }
     }
