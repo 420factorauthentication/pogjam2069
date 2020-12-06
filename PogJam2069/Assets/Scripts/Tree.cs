@@ -20,7 +20,7 @@ public class Tree : MonoBehaviour
     private bool didTreeEvent2 = false;
 
     public Animator anim;
-    private int totalChops = 27;
+    private int totalChops = 0;
 
 
     SpriteRenderer sr;
