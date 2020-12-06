@@ -5,17 +5,21 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioClip musicClip1;
-    public AudioClip axeChop1;
 
     public AudioClip btnHover;
     public AudioClip btnClick;
+
+    public AudioClip axeChop1;
+    public AudioClip treeFall1;
 
     [HideInInspector]
     public static AudioManager Amanager;
     public static GameObject musicObj;
     public static AudioSource musicSrc;
-    public static GameObject sfxObj;
-    public static AudioSource sfxSrc;
+    public static GameObject sfxObj1;
+    public static AudioSource sfxSrc1;
+    public static GameObject sfxObj2;
+    public static AudioSource sfxSrc2;
 
 
     void Awake() {
@@ -26,8 +30,10 @@ public class AudioManager : MonoBehaviour
             Amanager = this;
             musicObj = this.gameObject.transform.GetChild(0).gameObject;
             musicSrc = musicObj.GetComponent<AudioSource>();
-            sfxObj = this.gameObject.transform.GetChild(1).gameObject;
-            sfxSrc = sfxObj.GetComponent<AudioSource>();
+            sfxObj1 = this.gameObject.transform.GetChild(1).gameObject;
+            sfxSrc1 = sfxObj1.GetComponent<AudioSource>();
+            sfxObj2 = this.gameObject.transform.GetChild(2).gameObject;
+            sfxSrc2 = sfxObj2.GetComponent<AudioSource>();
         }
 
         DontDestroyOnLoad(this.gameObject);
@@ -37,20 +43,35 @@ public class AudioManager : MonoBehaviour
         playMusic1();
     }
 
+    // Music
     public void playMusic1() {
         musicSrc.clip = musicClip1;
         musicSrc.Play();
     }
 
+    // UI
     public void playHoverButton() {
-        sfxSrc.volume = 0.9f;
-        sfxSrc.clip = btnHover;
-        sfxSrc.Play(); 
+        sfxSrc1.volume = 0.9f;
+        sfxSrc1.clip = btnHover;
+        sfxSrc1.Play(); 
     }
 
     public void playClickButton() {
-        sfxSrc.volume = 0.7f;
-        sfxSrc.clip = btnClick;
-        sfxSrc.Play();
+        sfxSrc2.volume = 0.7f;
+        sfxSrc2.clip = btnClick;
+        sfxSrc2.Play();
+    }
+
+    // Gameplay
+    public void axeChop() {
+        sfxSrc1.volume = 0.5f;
+        sfxSrc1.clip = axeChop1;
+        sfxSrc1.Play();
+    }
+
+    public void treeFall() {
+        sfxSrc2.volume = 0.7f;
+        sfxSrc2.clip = treeFall1;
+        sfxSrc2.Play();
     }
 }

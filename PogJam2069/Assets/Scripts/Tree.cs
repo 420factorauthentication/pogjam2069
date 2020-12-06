@@ -89,6 +89,9 @@ public class Tree : MonoBehaviour
         WoodManager.Wmanager.addWood(woodToGive);
         treeisDead = true;
         currenthits = 0;
+
+        //sfx
+        AudioManager.Amanager.treeFall();
         
         // Tree Event 1: Lootbox at 1 Chop
         if (totalChops >= 1 && !didTreeEvent1) { PostTreeEvent1(); }
