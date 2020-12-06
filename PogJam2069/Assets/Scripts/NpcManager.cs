@@ -106,6 +106,7 @@ public class NpcManager : MonoBehaviour
         WoodManager.Wmanager.buildings.Find(x => x.GetComponent<BlackSmith>() != null).GetComponent<BlackSmith>().canBeBuilt = true;
         WoodManager.Wmanager.buildings.Find(x => x.GetComponent<Mine>() != null).GetComponent<Mine>().canBebuilt = true;
         robot1.gameObject.SetActive(true);
+        robot2.gameObject.SetActive(true);
         Surprise surprise1 = new Surprise(
             "Wood You Look At That",
             "All is good in the hood, but now there are too many people and only one tree! " +

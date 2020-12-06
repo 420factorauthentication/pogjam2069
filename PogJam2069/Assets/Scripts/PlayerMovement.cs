@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public Transform CursorDirection;
     public SpriteRenderer WeaponSprite;
+    public GameObject Fabove;
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -72,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
 
             //sr.flipX = true;
             facingRight = false;
+
+            Fabove.transform.localScale = new Vector3(Fabove.transform.localScale.x * -1, Fabove.transform.localScale.y, Fabove.transform.localScale.z);
         }
     }
 }

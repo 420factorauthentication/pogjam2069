@@ -127,10 +127,8 @@ public class WoodManager : MonoBehaviour
         }
 
         // Wood Event 2: Unlock robots at 200 wood + mine building
-        if(WoodFromMine >= 200 && !didMineEvent) {
-            if(GameObject.Find("Mine").GetComponent<Mine>().IsBuilt) {
-                postMineEvent();
-            }
+        if(WoodFromMine >= 100 && !didMineEvent) {
+            postMineEvent();
         }
 
         // Wood Event 3: Casino
