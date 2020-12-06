@@ -85,6 +85,7 @@ public class Guard : MonoBehaviour
                 {
                     canShoot = true;
                     isMovingToPoint = true;
+                    TalkHire();
                 }
                 else
                 {
@@ -232,6 +233,24 @@ public class Guard : MonoBehaviour
             "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
                 "women, man.\n" +
                 "If you get me a house, I might be able to join your village.",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void TalkHire()
+    {
+        Surprise surprise1 = new Surprise(
+            "FISHERWOMAN MANN",
+            "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
+                "women, man.\n" +
+                "You Give House. I protect For you.",
             30,
             15, //Player
             false,

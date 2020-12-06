@@ -203,6 +203,8 @@ public class WoodManager : MonoBehaviour
             "Gain some vintage aged wood?",
             // Choice 2: Bank now requires solving a math problem to use it.
             new UnityAction(delegate () {
+                NpcManager.npcManager.npc1.gameObject.SetActive(true);
+                NpcManager.npcManager.npc2.gameObject.SetActive(true);
                 Surprise surprise3 = new Surprise(
                     "",
                     "Gabe Newell releases Half Life Tree, causing Tesla's " +

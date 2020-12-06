@@ -141,6 +141,7 @@ public class BaseSlave : MonoBehaviour
                         {
                             canDoTask = true;
                             IsHired = true;
+                            isMoving = true;
                             talkMinerHire();
                         }
                         else if (!IsHired)
@@ -352,7 +353,7 @@ public class BaseSlave : MonoBehaviour
 
     private void talkMinerNeedHouse() {
         Surprise surprise1 = new Surprise(
-            "Pete Dophile",
+            "Robot",
             "I`m good with miners.\n" +
                 "If you get me a house, I might be able to join your village.",
             30,
@@ -368,7 +369,7 @@ public class BaseSlave : MonoBehaviour
 
     private void talkMinerNeedMine() {
         Surprise surprise1 = new Surprise(
-            "Pete Dophile",
+            "Robot",
             "I`m good with miners.\n" +
                 "If you open the mine, I might be able to join your village.",
             30,
@@ -384,8 +385,8 @@ public class BaseSlave : MonoBehaviour
 
     private void talkMinerHire() {
         Surprise surprise1 = new Surprise(
-            "Pete Dophile",
-            "Nice house! I'll get to work.",
+            "Robot",
+            "Nice mine! I'm going in!",
             30,
             15, //Player
             false,
@@ -399,7 +400,7 @@ public class BaseSlave : MonoBehaviour
 
     private void talkMinerWorking() {
         Surprise surprise1 = new Surprise(
-            "Pete Dophile",
+            "Robot",
             "How's it going, boss?",
             30,
             15, //Player
