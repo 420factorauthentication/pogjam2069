@@ -20,8 +20,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+        if (!NpcManager.npcManager.isMirrored) {
+            horizontal = Input.GetAxis("Horizontal");
+            vertical = Input.GetAxis("Vertical");
+        }
+        else {
+            horizontal = Input.GetAxis("Horizontal") * (-1);
+            vertical = Input.GetAxis("Vertical") * (-1);
+        }
     }
 
     private void FixedUpdate()

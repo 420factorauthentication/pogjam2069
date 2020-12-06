@@ -211,7 +211,7 @@ public class Tree : MonoBehaviour
                     "eunitnoC",
                     "ssergorP yretsyM eerT 0+",
                     new UnityAction(delegate () {
-                        // MirrorMovement()   ADD FUNCTION TO MIRROR MOVEMENT CONTROLS
+                        NpcManager.npcManager.MirrorMovement();
                     })
                 );
                 SurpriseManager.Smanager.PostSurprise(surprise6, true);
