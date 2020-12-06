@@ -12,7 +12,7 @@ public class WoodManager : MonoBehaviour
     public List<GameObject> buildings;
 
     // Events //
-    private bool didWoodSurprise1 = true;
+    private bool didWoodSurprise1 = false;
 
 
     // Start is called before the first frame update

@@ -1,24 +1,20 @@
-﻿using System.Collections;
+﻿//using System; // Array.Length
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;  //UnityEngine.Events.UnityAction used for delegates to button onClicks
-using UnityEngine.UI;
+using UnityEngine.Events; //UnityEngine.Events.UnityAction used for delegates to button onClicks
+using UnityEngine.UI;     // Canvas stuff
 
 public class SurpriseManager : MonoBehaviour {
     public static SurpriseManager Smanager;
 
     public GameObject surpriseFramePrefab; // Prefab used for dialog prompts.
     public List<Sprite> images;            // List of possible images for dialog prompt descriptions.
-    public List<GameObject> activeFrames;  // Current list of all active Surprise Event dialog prompts.
 
     
     /////////////////
     // Constructor //
     /////////////////
-    public SurpriseManager() {
-        this.activeFrames = new List<GameObject>();
-    }
-
     void Awake() {
         if (Smanager != null && Smanager != this){
             Destroy(this.gameObject);
@@ -29,7 +25,13 @@ public class SurpriseManager : MonoBehaviour {
     }
 
     void Start() {
-        
+        // Initialize canvas objects
+        GameObject newSurpriseFrame = Instantiate(this.surpriseFramePrefab);
+        for (var i = (newSurpriseFrame.transform.childCount - 1); i >= 0; i-- ) {
+            newSurpriseFrame.transform.GetChild(0).gameObject.SetActive(false);
+            newSurpriseFrame.transform.GetChild(0).SetParent(SurpriseCanvas.Scanvas.transform, true);
+        }
+        Destroy(newSurpriseFrame);
     }
 
     void Update() {
@@ -44,54 +46,54 @@ public class SurpriseManager : MonoBehaviour {
     // Shows a new Surprise Event dialog prompt. //
     ///////////////////////////////////////////////
     public void PostSurprise(Surprise s) {
-        GameObject newSurpriseFrame = Instantiate(this.surpriseFramePrefab);
-        
+        // Unhide SurpriseCanvas
+        for (var i = (SurpriseCanvas.Scanvas.transform.childCount - 1); i >= 0; i-- ) {
+            SurpriseCanvas.Scanvas.transform.GetChild(i).gameObject.SetActive(true);
+        }
 
-        /* title */ newSurpriseFrame.transform.GetChild(1).gameObject.GetComponent<Text>().text = s.title;
-        /* desc  */ newSurpriseFrame.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = s.desc;
-        /* img   */ newSurpriseFrame.transform.GetChild(2).GetChild(1).gameObject.GetComponent<Image>().sprite = this.images[s.img];
+        // Reset all onClick delegates
+        SurpriseCanvas.Scanvas.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+
+        // Configure properties
+        /* title */ SurpriseCanvas.Scanvas.transform.GetChild(1).gameObject.GetComponent<Text>().text = s.title;
+        /* desc  */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(0).gameObject.GetComponent<Text>().text = s.desc;
+        /* img   */ SurpriseCanvas.Scanvas.transform.GetChild(2).GetChild(1).gameObject.GetComponent<Image>().sprite = this.images[s.img];
         
         /* choice */
         if (s.choice) {
-            newSurpriseFrame.transform.GetChild(3).gameObject.SetActive(true);
-            newSurpriseFrame.transform.GetChild(4).gameObject.SetActive(true);
-            newSurpriseFrame.transform.GetChild(5).gameObject.SetActive(false);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).gameObject.SetActive(true);
+            SurpriseCanvas.Scanvas.transform.GetChild(4).gameObject.SetActive(true);
+            SurpriseCanvas.Scanvas.transform.GetChild(5).gameObject.SetActive(false);
         } else {
-            newSurpriseFrame.transform.GetChild(3).gameObject.SetActive(false);
-            newSurpriseFrame.transform.GetChild(4).gameObject.SetActive(false);
-            newSurpriseFrame.transform.GetChild(5).gameObject.SetActive(true);
+            SurpriseCanvas.Scanvas.transform.GetChild(3).gameObject.SetActive(false);
+            SurpriseCanvas.Scanvas.transform.GetChild(4).gameObject.SetActive(false);
+            SurpriseCanvas.Scanvas.transform.GetChild(5).gameObject.SetActive(true);
         }
 
-        /* noTitle */ newSurpriseFrame.transform.GetChild(5).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.noTitle;
-        /* noDesc  */ newSurpriseFrame.transform.GetChild(5).GetChild(1).gameObject.GetComponent<Text>().text = s.noDesc;
-        /* noFunc  */ if (s.noFunc != null) {newSurpriseFrame.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.noFunc);}
+        /* noTitle */ SurpriseCanvas.Scanvas.transform.GetChild(5).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.noTitle;
+        /* noDesc  */ SurpriseCanvas.Scanvas.transform.GetChild(5).GetChild(1).gameObject.GetComponent<Text>().text = s.noDesc;
+        /* noFunc  */ if (s.noFunc != null) {SurpriseCanvas.Scanvas.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.noFunc);}
 
-        /* c1Title */ newSurpriseFrame.transform.GetChild(3).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c1Title;
-        /* c1Desc  */ newSurpriseFrame.transform.GetChild(3).GetChild(1).gameObject.GetComponent<Text>().text = s.c1Desc;
-        /* c1Func  */ if (s.c1Func != null) {newSurpriseFrame.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c1Func);}
+        /* c1Title */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c1Title;
+        /* c1Desc  */ SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(1).gameObject.GetComponent<Text>().text = s.c1Desc;
+        /* c1Func  */ if (s.c1Func != null) {SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c1Func);}
 
-        /* c2Title */ newSurpriseFrame.transform.GetChild(4).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c2Title;
-        /* c2Desc  */ newSurpriseFrame.transform.GetChild(4).GetChild(1).gameObject.GetComponent<Text>().text = s.c2Desc;
-        /* c2Func  */ if (s.c2Func != null) {newSurpriseFrame.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c2Func);}
+        /* c2Title */ SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = s.c2Title;
+        /* c2Desc  */ SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(1).gameObject.GetComponent<Text>().text = s.c2Desc;
+        /* c2Func  */ if (s.c2Func != null) {SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(s.c2Func);}
         
 
-        // Close dialog on button click
-        newSurpriseFrame.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(new UnityAction(delegate() {
-            SurpriseManager.Smanager.activeFrames.Remove(GameObject.Find("SurpriseFrame(Clone)"));
-            Destroy(GameObject.Find("SurpriseFrame(Clone)"));
-        }));
-        newSurpriseFrame.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(new UnityAction(delegate() {
-            SurpriseManager.Smanager.activeFrames.Remove(GameObject.Find("SurpriseFrame(Clone)"));
-            Destroy(GameObject.Find("SurpriseFrame(Clone)"));
-        }));
-        newSurpriseFrame.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(new UnityAction(delegate() {
-            SurpriseManager.Smanager.activeFrames.Remove(GameObject.Find("SurpriseFrame(Clone)"));
-            Destroy(GameObject.Find("SurpriseFrame(Clone)"));
-        }));
-        
-        // Final stuff
-        newSurpriseFrame.GetComponent<CanvasScaler>().scaleFactor = 0.8f;
-        this.activeFrames.Add(newSurpriseFrame);
+        // Close dialog onClick
+        UnityAction closeSurpriseDialog = new UnityAction(delegate() {
+            for (var i = (SurpriseCanvas.Scanvas.transform.childCount - 1); i >= 0; i-- ) {
+                SurpriseCanvas.Scanvas.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        });
+        SurpriseCanvas.Scanvas.transform.GetChild(5).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+        SurpriseCanvas.Scanvas.transform.GetChild(3).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
+        SurpriseCanvas.Scanvas.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(closeSurpriseDialog);
     }
 }
 
