@@ -36,19 +36,7 @@ public class Castle : MonoBehaviour, IBuilding
                 Debug.Log("hey");
                 if (!IsBuilt && WoodManager.Wmanager.Wood >= Cost)
                 {
-                    BuildBuilding();
-                }
-                else if (IsBuilt && casinoIsOpen)
-                {
-                    BuildingUiManager.buildingUi.CasinoUI.SetActive(false);
-                    Time.timeScale = 1f;
-                    casinoIsOpen = false;
-                }
-                else if (IsBuilt && !casinoIsOpen)
-                {
-                    BuildingUiManager.buildingUi.CasinoUI.SetActive(true);
-                    Time.timeScale = 0f;
-                    casinoIsOpen = true;
+                    endGame();
                 }
             }
         }
@@ -77,6 +65,7 @@ public class Castle : MonoBehaviour, IBuilding
         {
             canPressF = true;
             FabovePlayer.SetActive(true);
+            FabovePlayer.GetComponent<Text>().text = "700 wood To Buy";
         }
     }
 
@@ -85,6 +74,7 @@ public class Castle : MonoBehaviour, IBuilding
         if (collision.tag == "Player")
         {
             canPressF = false;
+            FabovePlayer.GetComponent<Text>().text = "(Press F)";
             FabovePlayer.SetActive(false);
         }
     }

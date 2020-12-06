@@ -13927,7 +13927,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &653574104
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23973,7 +23973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buildingName: skyscra[er
-  _cost: 400
+  _cost: 350
   _isBuilt: 0
   BuildingCanvas: {fileID: 1284762022}
   builtSprite: {fileID: 1398750841}
@@ -23981,8 +23981,8 @@ MonoBehaviour:
   upgradeCosts: 
   buildingSprites: []
   notifTextBox: {fileID: 265413292}
-  woodRate: 10
-  woodAmount: 43000000
+  woodRate: 1
+  woodAmount: 0a000000
 --- !u!4 &1163011114
 Transform:
   m_ObjectHideFlags: 0
