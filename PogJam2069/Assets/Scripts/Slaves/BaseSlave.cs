@@ -113,8 +113,8 @@ public class BaseSlave : MonoBehaviour
             isMovingToDepot = false;
             Deposit();
             // change destination
-            targetOffset = new Vector2(Random.value, Random.value).normalized * randRadiusAroundPoint;
-            depotOffset = new Vector2(Random.value, Random.value).normalized * randRadiusAroundDepot;
+            targetOffset = new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f)).normalized * randRadiusAroundPoint;
+            depotOffset = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * randRadiusAroundDepot;
         }
         else
         {
@@ -277,6 +277,10 @@ public class BaseSlave : MonoBehaviour
         {
             CanBeHired = true;
         }
+        if(collision.tag == "Enemy")
+        {
+            isMovingToDepot = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -284,6 +288,10 @@ public class BaseSlave : MonoBehaviour
         if(collision.tag == "Player")
         {
             CanBeHired = false;
+        }
+        if (collision.tag == "Enemy")
+        {
+            isMovingToDepot = false;
         }
     }
 

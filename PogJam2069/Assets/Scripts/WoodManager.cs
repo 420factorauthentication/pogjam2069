@@ -11,11 +11,13 @@ public class WoodManager : MonoBehaviour
     public int Wood;
     public int WoodFromMine = 0;
     public int WoodFromTreeFromNpc = 0;
+    public int WoodFromCasino = 0;
     public List<GameObject> buildings;
 
     // Events //
     private bool didStockpileEvent = false;
     private bool didMineEvent = false;
+    private bool didCasinoEvent = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -41,7 +43,7 @@ public class WoodManager : MonoBehaviour
     //                                                                        //
     // Adds wood, checks events, and checks if enough wood to build anything. //
     ////////////////////////////////////////////////////////////////////////////
-    public void addWood(int woodToAdd, bool isFromMine = false, bool isFromTree = false)
+    public void addWood(int woodToAdd, bool isFromMine = false, bool isFromTree = false, bool isFromCasino=false)
     {
         Wood += woodToAdd;
         CheckBuilding();
@@ -60,6 +62,21 @@ public class WoodManager : MonoBehaviour
                 postMineEvent();
             }
         }
+
+        if (isFromMine)
+        {
+            WoodFromMine += woodToAdd;
+        }
+        if (isFromTree)
+        {
+            WoodFromTreeFromNpc += woodToAdd;
+        }
+        if (isFromCasino)
+        {
+            WoodFromCasino += woodToAdd;
+        }
+        EventCheck();
+
     }
 
     /////////////////////////////////////////////////////////////////
@@ -78,6 +95,7 @@ public class WoodManager : MonoBehaviour
             Wood = 0;
         }
         CheckBuilding();
+        EventCheck();
     }
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +110,7 @@ public class WoodManager : MonoBehaviour
             Wood -= woodToSubtrack;
         }
         CheckBuilding();
+        EventCheck();
     }
 
     ///////////////////////////////////////////////////////////////
@@ -104,6 +123,27 @@ public class WoodManager : MonoBehaviour
         foreach (GameObject build in buildings)
         {
             build.GetComponent<IBuilding>().CheckCanBuild(Wood);
+        }
+    }
+
+    private void EventCheck()
+    {
+        if(Wood > 20 && !didStockpileEvent)
+        {
+            if(buildings.Find(x => x.GetComponent<Storage>() != null) != null)
+            {
+                // put event data here
+                didStockpileEvent = true;
+            }
+        }
+        if(Wood > 200 && !didMineEvent)
+        {
+            didMineEvent = true;
+        }
+        if(WoodFromCasino <= -400 && !didCasinoEvent)
+        {
+            // do casino losing event
+            didCasinoEvent = true;
         }
     }
 
@@ -139,7 +179,6 @@ public class WoodManager : MonoBehaviour
                     24,
                     15, //Player
                     false,
-
                     "Continue",
                     "+1 Worker",
                     null //new UnityAction(delegate () { AddWorker(1); })    ADD FUNCTION TO ADD +1 WORKER

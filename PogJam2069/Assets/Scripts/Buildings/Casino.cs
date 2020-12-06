@@ -15,16 +15,18 @@ public class Casino : MonoBehaviour, IBuilding
     public string BuildingName { get { return _buildingName; } set { _buildingName = value; } }
     public int Cost { get { return _cost; } set { _cost = value; } }
     public bool IsBuilt { get { return _isBuilt; } set { _isBuilt = value; } }
-    public GameObject canBeBuiltOutline;
+    public GameObject BuildingCanvas;
     public GameObject builtSprite;
     public Text notifTextBox;
 
     private bool canPressF = false;
+    private bool casinoIsOpen = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        notifTextBox.text = Cost.ToString() + "Wood";
+        BuildingCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,9 +34,25 @@ public class Casino : MonoBehaviour, IBuilding
     {
         if (canPressF)
         {
-            if (Input.GetKeyDown(KeyCode.F) && WoodManager.Wmanager.Wood >= Cost)
+            if (Input.GetKeyUp(KeyCode.F))
             {
-                BuildBuilding();
+                Debug.Log("hey");
+                if(!IsBuilt && WoodManager.Wmanager.Wood >= Cost)
+                {
+                    BuildBuilding();
+                }
+                else if(IsBuilt && casinoIsOpen)
+                {
+                    BuildingUiManager.buildingUi.CasinoUI.SetActive(false);
+                    Time.timeScale = 1f;
+                    casinoIsOpen = false;
+                }
+                else if(IsBuilt && !casinoIsOpen)
+                {
+                    BuildingUiManager.buildingUi.CasinoUI.SetActive(true);
+                    Time.timeScale = 0f;
+                    casinoIsOpen = true;
+                }
             }
         }
     }
@@ -43,17 +61,9 @@ public class Casino : MonoBehaviour, IBuilding
     {
         if (!IsBuilt && currWood >= Cost)
         {
-            canBeBuiltOutline.SetActive(true);
-            builtSprite.SetActive(false);
-            notifTextBox.gameObject.SetActive(true);
-            notifTextBox.text = "Press F to Build";
-        }
-        else if (!IsBuilt && currWood < Cost && canBeBuiltOutline.activeSelf)
-        {
-            canBeBuiltOutline.SetActive(false);
-            builtSprite.SetActive(false);
-            notifTextBox.gameObject.SetActive(false);
-            notifTextBox.text = "";
+            BuildingCanvas.SetActive(true);
+            notifTextBox.text = Cost.ToString() + " Wood (F)";
+
         }
     }
 
@@ -62,10 +72,9 @@ public class Casino : MonoBehaviour, IBuilding
         if (!IsBuilt && WoodManager.Wmanager.Wood >= Cost)
         {
             WoodManager.Wmanager.PurchaseWithWood(Cost);
-            canBeBuiltOutline.SetActive(false);
             builtSprite.SetActive(true);
-            notifTextBox.gameObject.SetActive(false);
-            notifTextBox.text = "";
+            BuildingCanvas.SetActive(false);
+
             IsBuilt = true;
         }
     }

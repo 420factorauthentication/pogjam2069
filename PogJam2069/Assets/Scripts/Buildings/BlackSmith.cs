@@ -19,6 +19,10 @@ public class BlackSmith : MonoBehaviour, IBuilding
     public GameObject builtSprite;
     public Text notifTextBox;
 
+    // every guard that you can get and change how they spawn in as you like
+    public Guard guard1;
+    public Guard guard2;
+
     private bool canPressF = false;
 
     // Start is called before the first frame update
