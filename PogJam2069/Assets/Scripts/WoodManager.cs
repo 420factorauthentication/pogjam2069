@@ -14,7 +14,7 @@ public class WoodManager : MonoBehaviour
     public List<GameObject> buildings;
 
     // Events //
-    private bool didWoodStockpileEvent = false;
+    private bool didStockpileEvent = false;
     private bool didMineEvent = false;
 
     // Start is called before the first frame update
@@ -41,6 +41,18 @@ public class WoodManager : MonoBehaviour
         Wood += woodToAdd;
         CheckBuilding();
         Debug.Log("Wood: " + Wood.ToString());
+
+        // Wood Event 1: First worker at 20 wood + stockpile building
+        // if (Wood >= 20 && !didStockpileEvent) {
+        //     if(buildings.Find(x => x.GetComponent<Storage>() != null) != null) {
+        //         postStockpileEvent();
+        //     }
+        // }
+
+        //if(Wood > 200 && !didMineEvent)
+        //{
+        //
+        //}
     }
 
     public void SubtractWood(int woodToSubtrack)
@@ -75,22 +87,12 @@ public class WoodManager : MonoBehaviour
 
     private void EventCheck()
     {
-        if(Wood > 20 && !didWoodStockpileEvent)
-        {
-            if(buildings.Find(x => x.GetComponent<Storage>() != null) != null)
-            {
-                // put event data here
-                didWoodStockpileEvent = true;
-            }
-        }
-        if(Wood > 200 && !didMineEvent)
-        {
 
-        }
     }
 
-
-    //////////////////////////////
-    // Event Function Delegates //
-    //////////////////////////////
+    ////////////////////////////////////////////////////////////////
+    // Wood Event 1: First worker at 20 wood + stockpile building //
+    ////////////////////////////////////////////////////////////////
+    //private void postStockpileEvent {
+    //}
 }
