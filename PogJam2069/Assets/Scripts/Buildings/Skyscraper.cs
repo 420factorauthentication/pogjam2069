@@ -15,7 +15,7 @@ public class Skyscraper : MonoBehaviour, IBuilding
     public string BuildingName { get { return _buildingName; } set { _buildingName = value; } }
     public int Cost { get { return _cost; } set { _cost = value; } }
     public bool IsBuilt { get { return _isBuilt; } set { _isBuilt = value; } }
-    public GameObject canBeBuiltOutline;
+    public GameObject BuildingCanvas;
     public GameObject builtSprite;
     public int buildingLevel = 0;
     public List<int> upgradeCosts;
@@ -30,7 +30,8 @@ public class Skyscraper : MonoBehaviour, IBuilding
     // Start is called before the first frame update
     void Start()
     {
-        
+        notifTextBox.text = Cost.ToString() + "Wood";
+        BuildingCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -59,29 +60,9 @@ public class Skyscraper : MonoBehaviour, IBuilding
     {
         if (!IsBuilt && currWood >= Cost)
         {
-            canBeBuiltOutline.SetActive(true);
-            builtSprite.SetActive(false);
-            notifTextBox.gameObject.SetActive(true);
-            notifTextBox.text = "Press F to Build";
-        }
-        else if (!IsBuilt && currWood < Cost && canBeBuiltOutline.activeSelf)
-        {
-            canBeBuiltOutline.SetActive(false);
-            builtSprite.SetActive(false);
-            notifTextBox.gameObject.SetActive(false);
-            notifTextBox.text = "";
-        }
-        else if(IsBuilt && currWood >= upgradeCosts[buildingLevel-1])
-        {
-            canBeBuiltOutline.SetActive(true);
-            notifTextBox.gameObject.SetActive(true);
-            notifTextBox.text = "Press F to Upgrade";
-        }
-        else if(IsBuilt && currWood < upgradeCosts[buildingLevel-1])
-        {
-            canBeBuiltOutline.SetActive(false);
-            notifTextBox.gameObject.SetActive(false);
-            notifTextBox.text = "";
+            BuildingCanvas.SetActive(true);
+            notifTextBox.text = Cost.ToString() + " Wood (F)";
+
         }
     }
 
@@ -90,23 +71,10 @@ public class Skyscraper : MonoBehaviour, IBuilding
         if (!IsBuilt && WoodManager.Wmanager.Wood >= Cost)
         {
             WoodManager.Wmanager.PurchaseWithWood(Cost);
-            canBeBuiltOutline.SetActive(false);
             builtSprite.SetActive(true);
-            notifTextBox.gameObject.SetActive(false);
-            notifTextBox.text = "";
+            BuildingCanvas.SetActive(false);
+
             IsBuilt = true;
-            buildingLevel = 1;
-        }
-        else if (IsBuilt && WoodManager.Wmanager.Wood >= upgradeCosts[buildingLevel])
-        {
-            WoodManager.Wmanager.PurchaseWithWood(upgradeCosts[buildingLevel]);
-            canBeBuiltOutline.SetActive(false);
-            builtSprite.SetActive(true);
-            builtSprite.GetComponent<SpriteRenderer>().sprite = buildingSprites[buildingLevel];
-            notifTextBox.gameObject.SetActive(false);
-            notifTextBox.text = "";
-            IsBuilt = true;
-            buildingLevel++;
         }
     }
 
