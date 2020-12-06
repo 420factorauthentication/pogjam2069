@@ -18,6 +18,7 @@ public class BlackSmith : MonoBehaviour, IBuilding
     public GameObject BuildingCanvas;
     public GameObject builtSprite;
     public Text notifTextBox;
+    public bool canBeBuilt = false;
 
     // every guard that you can get and change how they spawn in as you like
     public Guard guard1;
@@ -46,16 +47,16 @@ public class BlackSmith : MonoBehaviour, IBuilding
 
     public void CheckCanBuild(int currWood)
     {
-        if (!IsBuilt && currWood >= Cost)
+        if (!IsBuilt && canBeBuilt && currWood >= Cost)
         {
             BuildingCanvas.SetActive(true);
             notifTextBox.text = Cost.ToString() + " Wood (F)";
 
         }
-        else if (!IsBuilt && currWood < Cost)
+        else if (!IsBuilt && canBeBuilt)
         {
-            
-            
+            BuildingCanvas.SetActive(true);
+            notifTextBox.text = Cost.ToString() + " Wood (F)";
         }
     }
 
@@ -68,6 +69,7 @@ public class BlackSmith : MonoBehaviour, IBuilding
             BuildingCanvas.SetActive(false);
 
             IsBuilt = true;
+            guard1.gameObject.SetActive(true);
         }
     }
 

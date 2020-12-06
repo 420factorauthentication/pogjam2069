@@ -58,7 +58,7 @@ public class WoodManager : MonoBehaviour
         }
 
         // Wood Event 2: Unlock robots at 200 wood + mine building
-        if(Wood > 200 && !didMineEvent) {
+        if(Wood >= 200 && !didMineEvent) {
             if(GameObject.Find("Mine").GetComponent<Mine>().IsBuilt) {
                 postMineEvent();
             }
@@ -174,6 +174,8 @@ public class WoodManager : MonoBehaviour
             "Sell some wood for money?",
             // Choice 1: Gain first worker.
             new UnityAction(delegate () {
+                NpcManager.npcManager.npc1.gameObject.SetActive(true);
+                NpcManager.npcManager.npc2.gameObject.SetActive(true);
                 Surprise surprise2 = new Surprise(
                     "",
                     "Searching for buyers, you run into Todd Howard. At first, " +
@@ -218,7 +220,63 @@ public class WoodManager : MonoBehaviour
     /////////////////////////////////////////////////////////////
     // Wood Event 2: Unlock robots at 200 wood + mine building //
     /////////////////////////////////////////////////////////////
-    private void postMineEvent() {
-        
+    private void postMineEvent()
+    {
+        didMineEvent = true;
+        Surprise surprise1 = new Surprise(
+            "All We Have Are Red Pills",
+            "The future is robots, and the robots do it all. But can you rest easily " +
+            "knowing that the robots do everything? You head down to the mine, and are " +
+            "suprised to see all the robots on strike. \"We demand higher minimum wage and" +
+            "healthcare.\" Where did they even learn these things? ",
+            30,
+            3, //Blacksmith
+            true,
+
+            "",
+            "",
+            null,
+
+            "Give worker benefits",
+            "Let the robots have what they want.",
+            // Choice 1: Gain first worker.
+            new UnityAction(delegate () {
+                SubtractWood(Wood);
+                NpcManager.npcManager.robot2.gameObject.SetActive(true);
+                NpcManager.npcManager.robot3.gameObject.SetActive(true);
+                NpcManager.npcManager.robot4.gameObject.SetActive(true);
+                Surprise surprise2 = new Surprise(
+                    "All We Have Are Red Pills",
+                    "You successfully convince the lazy robots to get off their butts and keep working. But at the cost of your entire wood supply. ",
+                    24,
+                    4, //Robot
+                    false,
+                    "",
+                    "Continue",
+                    null //new UnityAction(delegate () { AddWorker(1); })    ADD FUNCTION TO ADD +1 WORKER
+                );
+                SurpriseManager.Smanager.PostSurprise(surprise2, true);
+            }),
+
+            "Economic downsizing",
+            "Rework your org-chart a little.",
+            // Choice 2: Bank now requires solving a math problem to use it.
+            new UnityAction(delegate () {
+                NpcManager.npcManager.robot2.gameObject.SetActive(true);
+                Surprise surprise3 = new Surprise(
+                    "All We Have Are Red Pills",
+                    "You pick the two best robots and kick the rest to the curb. That'll show them.",
+                    30,
+                    4, //robots
+                    false,
+
+                    "",
+                    "Continue",
+                    null //new UnityAction(delegate () { EnableBankCaptcha; })    ADD FUNCTION TO ENABLE BANK CAPTCHA
+                );
+                SurpriseManager.Smanager.PostSurprise(surprise3, true);
+            })
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, false);
     }
 }

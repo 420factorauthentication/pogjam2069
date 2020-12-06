@@ -78,7 +78,7 @@ public class Guard : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Not enough money to hire me pleb");
+                    talkNotEnough();
                 }
             }
         }
@@ -192,5 +192,44 @@ public class Guard : MonoBehaviour
         Vector3 velocity = dir * speed * speedFactor;
 
         transform.position += velocity * deltaTime;
+    }
+
+    /////////////////////
+    // EVENT DELEGATES //
+    /////////////////////
+    private void talkHireGuard()
+    {
+        Surprise surprise1 = new Surprise(
+            "Fisherwoman Mann",
+            "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
+                "women, man.\n" +
+                "If you get me a house, I might be able to join your village.",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
+    }
+
+    private void talkNotEnough()
+    {
+        Surprise surprise1 = new Surprise(
+            "Fisherwoman Mann",
+            "I`m Fisherwoman Mann. I`m a fisherwoman named Mann. I fish with " +
+                "women, man.\n" +
+                "If you get me a house, I might be able to join your village.",
+            30,
+            15, //Player
+            false,
+
+            "Continue",
+            "",
+            null
+        );
+        SurpriseManager.Smanager.PostSurprise(surprise1, true);
     }
 }
