@@ -39,6 +39,7 @@ public class BaseSlave : MonoBehaviour
     private Vector3 targetOffset = new Vector2();
     private Vector3 depotOffset = new Vector2();
     private RotateToTree rotater;
+    private bool CanBeHired = false;
     [SerializeField]
     private Transform _currMoveTarget;
     private float timeSinceLastTask = 0f;
@@ -82,9 +83,9 @@ public class BaseSlave : MonoBehaviour
                         counter++;
                         if (counter > 1)
                         {
+                            rotater.pointToTree = false;
                             isMovingToDepot = true;
                             isMoving = true;
-                            rotater.pointToTree = false;
                             counter = 0;
                         }
                     }
@@ -97,9 +98,13 @@ public class BaseSlave : MonoBehaviour
         }
 
         float deltaTime = Time.deltaTime;
+        //Debug.Log(Mathf.Abs(Vector2.Distance(currMoveTarget.position + targetOffset, transform.position)));
+        //Debug.Log(currMoveTarget.position + targetOffset);
+        //Debug.Log(transform.position);
         if (!isMovingToDepot && Mathf.Abs(Vector2.Distance(currMoveTarget.position + targetOffset, transform.position)) < allowedDiff)
         {
             isMoving = false;
+            isMovingToDepot = false;
         }
         else if (isMovingToDepot && Mathf.Abs(Vector2.Distance(currDepotTarget.position + depotOffset, transform.position)) < allowedDiff)
         {
@@ -117,6 +122,22 @@ public class BaseSlave : MonoBehaviour
         {
             // move to target
             Move(deltaTime);
+        }
+
+        if(CanBeHired)
+        {
+            if(Input.GetKey(KeyCode.F))
+            {
+                if (NpcManager.npcManager.AddNpc(this))
+                {
+                    canDoTask = true;
+                    Debug.Log("Sure I'll come work");
+                }
+                else
+                {
+                    Debug.Log("I can't work in your village yet I need a house");
+                }
+            }
         }
 
         // upate time
@@ -211,6 +232,22 @@ public class BaseSlave : MonoBehaviour
         else
         {
             p.Release(this);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            CanBeHired = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.tag == "Player")
+        {
+            CanBeHired = false;
         }
     }
 }

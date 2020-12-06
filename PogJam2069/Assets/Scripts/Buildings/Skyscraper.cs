@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class House : MonoBehaviour, IBuilding
+public class Skyscraper : MonoBehaviour, IBuilding
 {
     [SerializeField]
     private string _buildingName;
@@ -17,15 +17,20 @@ public class House : MonoBehaviour, IBuilding
     public bool IsBuilt { get { return _isBuilt; } set { _isBuilt = value; } }
     public GameObject canBeBuiltOutline;
     public GameObject builtSprite;
+    public int buildingLevel = 0;
+    public List<int> upgradeCosts;
+    public List<Sprite> buildingSprites;
     public Text notifTextBox;
-    public bool isNpcHouse = true;
+    public float woodRate = 2f;
+    public List<int> woodAmount = new List<int>();
 
     private bool canPressF = false;
+    private float timeSinceLast = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -37,6 +42,15 @@ public class House : MonoBehaviour, IBuilding
             {
                 BuildBuilding();
             }
+        }
+
+        if(IsBuilt)
+        {
+            if(timeSinceLast > woodRate)
+            {
+                WoodManager.Wmanager.addWood(woodAmount[buildingLevel - 1]);
+            }
+            timeSinceLast += Time.deltaTime;
         }
     }
 
@@ -56,6 +70,18 @@ public class House : MonoBehaviour, IBuilding
             notifTextBox.gameObject.SetActive(false);
             notifTextBox.text = "";
         }
+        else if(IsBuilt && currWood >= upgradeCosts[buildingLevel-1])
+        {
+            canBeBuiltOutline.SetActive(true);
+            notifTextBox.gameObject.SetActive(true);
+            notifTextBox.text = "Press F to Upgrade";
+        }
+        else if(IsBuilt && currWood < upgradeCosts[buildingLevel-1])
+        {
+            canBeBuiltOutline.SetActive(false);
+            notifTextBox.gameObject.SetActive(false);
+            notifTextBox.text = "";
+        }
     }
 
     public void BuildBuilding()
@@ -68,10 +94,18 @@ public class House : MonoBehaviour, IBuilding
             notifTextBox.gameObject.SetActive(false);
             notifTextBox.text = "";
             IsBuilt = true;
-            if(isNpcHouse)
-            {
-                NpcManager.npcManager.AddNpcHouse(this);
-            }
+            buildingLevel = 1;
+        }
+        else if (IsBuilt && WoodManager.Wmanager.Wood >= upgradeCosts[buildingLevel])
+        {
+            WoodManager.Wmanager.PurchaseWithWood(upgradeCosts[buildingLevel]);
+            canBeBuiltOutline.SetActive(false);
+            builtSprite.SetActive(true);
+            builtSprite.GetComponent<SpriteRenderer>().sprite = buildingSprites[buildingLevel];
+            notifTextBox.gameObject.SetActive(false);
+            notifTextBox.text = "";
+            IsBuilt = true;
+            buildingLevel++;
         }
     }
 
@@ -85,7 +119,7 @@ public class House : MonoBehaviour, IBuilding
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
         {
             canPressF = false;
         }

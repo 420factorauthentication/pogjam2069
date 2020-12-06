@@ -13,6 +13,8 @@ public class WoodManager : MonoBehaviour
 
     // Events //
     private bool didWoodSurprise1 = true;
+    private bool didWoodStockpileEvent = false;
+    private bool didMineEvent = false;
 
 
     // Start is called before the first frame update
@@ -92,6 +94,22 @@ public class WoodManager : MonoBehaviour
         foreach (GameObject build in buildings)
         {
             build.GetComponent<IBuilding>().CheckCanBuild(Wood);
+        }
+    }
+
+    private void EventCheck()
+    {
+        if(Wood > 20 && !didWoodStockpileEvent)
+        {
+            if(buildings.Find(x => x.GetComponent<Storage>() != null) != null)
+            {
+                // put event data here
+                didWoodStockpileEvent = true;
+            }
+        }
+        if(Wood > 200 && !didMineEvent)
+        {
+
         }
     }
 
