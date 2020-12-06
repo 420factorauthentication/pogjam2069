@@ -109,7 +109,7 @@ public class NpcManager : MonoBehaviour
         Surprise surprise1 = new Surprise(
             "Wood You Look At That",
             "All is good in the hood, but now there are too many people and only one tree! " +
-            "You wake up one morning and are suprised to see some people start a blacksmith " +
+            "You wake up one morning and are surprised to see some people start a blacksmith " +
             "company. There's also a peculiar figure to the north...",
             30,
             3, //blacksmith
